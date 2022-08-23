@@ -11,12 +11,22 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^2.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "prettier": "2.7.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm build && scp -r ./build/* krasotun@84.201.164.144:/home/krasotun/movies-frontend"
+    "deploy": "npm build && scp -r ./build/* krasotun@84.201.164.144:/home/krasotun/movies-frontend",
+    "lint": "npx eslint ."
   },
   "eslintConfig": {
     "extends": [
