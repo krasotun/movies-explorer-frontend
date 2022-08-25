@@ -1,9 +1,10 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["airbnb", "airbnb/hooks"],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -11,8 +12,18 @@
   },
   "plugins": ["react"],
   "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
     "react/react-in-jsx-scope": "off",
-    // allow jsx syntax in js files (for next.js project)
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "no-tabs": 0,
+    "react/prop-types": 0,
+    "react/jsx-indent": [2, "tab"],
+    "react/jsx-indent-props": [2, "tab"],
+    "linebreak-style": 0
   }
 }
