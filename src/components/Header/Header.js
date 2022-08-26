@@ -1,8 +1,13 @@
 import React from 'react';
+import Logo from '../Logo/Logo';
+import PromoNavigation from '../PromoNavigation/PromoNavigation';
 
 function Header() {
 	return (
-		<h2>Header works</h2>
+		<section className="header">
+			<Logo />
+			<PromoNavigation />
+		</section>
 	);
 }
 

@@ -24,6 +24,7 @@
     "react/prop-types": 0,
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "jsx-quotes": "warn"
   }
 }
