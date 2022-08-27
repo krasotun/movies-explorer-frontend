@@ -1,0 +1,21 @@
+.navigation {
+  &__list {
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+  }
+  &__item {
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
