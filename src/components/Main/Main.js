@@ -9,9 +9,8 @@ import Portfolio from '../Portfolio/Portfolio';
 function Main() {
 	return (
 		<main className="main">
-			<Promo>
-				<NavTab />
-			</Promo>
+			<Promo />
+			<NavTab />
 			<AboutProject />
 			<Techs />
 			<AboutMe />
