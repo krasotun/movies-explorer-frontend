@@ -1,10 +1,12 @@
 import React from 'react';
 
+const promoTitle = 'Учебный проект студента факультета Веб-разработки.';
+
 function Promo() {
 	return (
-		<div>
-			Promo works!
-		</div>
+		<section className="promo">
+			<h1 className="promo__title">{promoTitle}</h1>
+		</section>
 	);
 }
 

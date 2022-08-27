@@ -1,0 +1,22 @@
+.promo {
+  min-height: 524px;
+  background: #465dff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../images/promo-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  &__title {
+    text-align: center;
+    margin: 0;
+    width: 730px;
+    display: block;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    color: #ffffff;
+  }
+}
