@@ -1,7 +1,7 @@
 import React from 'react';
 
 function NavTab() {
-	const tabsArray = [
+	const tabsData = [
 		{
 			title: 'О проекте',
 			link: '/',
@@ -24,8 +24,7 @@ function NavTab() {
 			id: 3,
 		},
 	];
-
-	const navTabContent = tabsArray.map((item) => (
+	const navTabContent = tabsData.map((item) => (
 		<li
 			className={item.itemClassName}
 			key={item.id}
@@ -38,7 +37,6 @@ function NavTab() {
 			</a>
 		</li>
 	));
-
 	return (
 		<section className="navigation-tab">
 			<ul className="navigation-tab__list">
@@ -47,5 +45,4 @@ function NavTab() {
 		</section>
 	);
 }
-
 export default NavTab;

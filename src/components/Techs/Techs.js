@@ -1,10 +1,11 @@
 import React from 'react';
+import SectionTitle from '../SectionTitle/SectionTitle';
 
 function Techs() {
 	return (
-		<div>
-			Techs works
-		</div>
+		<SectionTitle
+			title="Технологии"
+		/>
 	);
 }
 

@@ -1,10 +1,11 @@
 import React from 'react';
+import SectionTitle from '../SectionTitle/SectionTitle';
 
 function AboutMe() {
 	return (
-		<div>
-			AboutMe works
-		</div>
+		<SectionTitle
+			title="Студент"
+		/>
 	);
 }
 export default AboutMe;
