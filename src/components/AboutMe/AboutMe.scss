@@ -1,0 +1,56 @@
+.student {
+  padding: 110px 70px;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__content {
+    margin-top: 66px;
+  }
+  &-text-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+  }
+  &__name {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    color: #000000;
+  }
+  &__job {
+    margin-top: 18px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+  }
+  &__description {
+    margin-top: 26px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #000000;
+  }
+  &__github {
+    margin-top: 99px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    text-decoration: none;
+  }
+  &__photo {
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+    background-image: url("../../images/student-photo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
