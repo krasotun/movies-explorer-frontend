@@ -2,9 +2,9 @@ import React from 'react';
 
 function SectionTitle({ title }) {
 	return (
-		<h2 className="section-title">
+		<h3 className="section-title">
 			{title}
-		</h2>
+		</h3>
 	);
 }
 
