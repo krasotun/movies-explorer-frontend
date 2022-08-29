@@ -1,0 +1,31 @@
+.portfolio {
+  padding: 0 70px 125px 0;
+  :last-child {
+    border-bottom: none;
+  }
+  &__links {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+  }
+  &__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #a0a0a0;
+  }
+  &__text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 50px;
+    color: #000000;
+  }
+}
