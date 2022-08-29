@@ -14,7 +14,7 @@ function Portfolio() {
 			id: 2,
 		},
 		{
-			title: 'Статичный сайт',
+			title: 'Одностраничное приложение',
 			link: 'https://krasotun.nomoredomains.sbs/',
 			id: 3,
 		},
