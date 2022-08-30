@@ -1,12 +1,13 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
 import PromoNavigation from '../PromoNavigation/PromoNavigation';
+import LoggedNavigation from '../LoggedNavigation/LoggedNavigation';
 
-function Header() {
+function Header({ isLoggedIn }) {
 	return (
-		<section className="header">
+		<section className={isLoggedIn ? 'header header_transparent' : 'header'}>
 			<Logo />
-			<PromoNavigation />
+			{isLoggedIn ? <LoggedNavigation /> : <PromoNavigation />}
 		</section>
 	);
 }
