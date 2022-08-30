@@ -1,0 +1,36 @@
+.search-form {
+  position: relative;
+  &__text-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 46px;
+    background: #f9f9f9;
+    border-radius: 40px;
+    border: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 17px;
+    color: #a0a0a0;
+    padding-left: 22px;
+    &::placeholder {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 17px;
+      color: #a0a0a0;
+    }
+  }
+  &__submit-button {
+    border: none;
+    background: transparent;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

@@ -1,7 +1,8 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import Main from '../Main/Main';
+// import Main from '../Main/Main';
+import SearchSection from '../SearchSection/SearchSection';
 
 function App() {
 	// eslint-disable-next-line no-unused-vars
@@ -12,7 +13,8 @@ function App() {
 			<Header
 				isLoggedIn={isLoggedIn}
 			/>
-			<Main />
+			<SearchSection />
+			{/* <Main /> */}
 			<Footer />
 		</div>
 	);
