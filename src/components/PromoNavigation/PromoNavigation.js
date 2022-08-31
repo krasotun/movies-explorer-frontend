@@ -14,9 +14,8 @@ function PromoNavigation() {
 				<NavLink className="navigation__item" to="/signin" aria-label="Перейти на страницу авторизации">
 					<li>
 						<Button
-							place="navigation"
-							color="green"
-							text="Войти"
+							type="navigation"
+							label="Войти"
 						/>
 					</li>
 				</NavLink>

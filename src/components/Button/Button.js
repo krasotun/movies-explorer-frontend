@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Button({ place, color, text }) {
+function Button({ type, label }) {
 	return (
-		<button type="button" className={`button button__${place} button_${color}`}>
-			{text}
+		<button type="button" className={`button button_type_${type}`}>
+			{label}
 		</button>
 	);
 }

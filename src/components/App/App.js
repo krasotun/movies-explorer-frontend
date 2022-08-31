@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 // import Main from '../Main/Main';
 import SearchSection from '../SearchSection/SearchSection';
 
@@ -14,6 +15,7 @@ function App() {
 				isLoggedIn={isLoggedIn}
 			/>
 			<SearchSection />
+			<MoviesCardList />
 			{/* <Main /> */}
 			<Footer />
 		</div>
