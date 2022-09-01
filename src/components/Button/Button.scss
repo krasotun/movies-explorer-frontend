@@ -22,7 +22,7 @@
       margin-left: 50px;
       background: #2be080;
     }
-    &_movie-card {
+    &_movie-card_save {
       background: #f9f9f9;
       border-radius: 30px;
       height: 21px;
@@ -35,6 +35,15 @@
       text-align: center;
       color: #000000;
       position: absolute;
+      top: 14px;
+      right: 14px;
+    }
+    &_movie-card_saved {
+      background: transparent;
+      padding: 0;
+      position: absolute;
+      width: 21px;
+      height: 21px;
       top: 14px;
       right: 14px;
     }
