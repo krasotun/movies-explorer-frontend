@@ -5,7 +5,24 @@ import secondImagePath from '../../images/second-movie.png';
 import thirdImagePath from '../../images/third-movie.png';
 import Button from '../Button/Button';
 
-function MoviesCardList() {
+function MoviesCardList({ moreButtonShown }) {
+	const moreButtonMarkup = () => {
+		if (moreButtonShown) {
+			return (
+				<div className="movies__button-container">
+					<Button
+						type="more"
+						label="Ещё"
+					/>
+				</div>
+			);
+			// eslint-disable-next-line no-else-return
+		} else {
+			return (
+				<div className="movies__divider" />
+			);
+		}
+	};
 	return (
 		<section className="movies">
 			<div className="movies__cards-container">
@@ -26,12 +43,7 @@ function MoviesCardList() {
 					length="1ч 17м"
 				/>
 			</div>
-			<div className="movies__button-container">
-				<Button
-					type="more"
-					label="Ещё"
-				/>
-			</div>
+			{moreButtonMarkup()}
 		</section>
 	);
 }
