@@ -47,5 +47,16 @@
       top: 14px;
       right: 14px;
     }
+    &_more {
+      width: 100%;
+      background: #f9f9f9;
+      border-radius: 6px;
+      height: 36px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #000000;
+    }
   }
 }

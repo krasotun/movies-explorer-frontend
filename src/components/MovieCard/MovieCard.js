@@ -20,7 +20,8 @@ function MovieCard({ name, link, length }) {
 
 	return (
 		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{isOwn ? <Button onClick={toggleIsOwn} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} /> : <Button onClick={toggleIsOwn} type="movie-card_save" label="Сохранить" />}
+			{isOwn && <Button onClick={toggleIsOwn} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
+			{(!isOwn && isHovered) && <Button onClick={toggleIsOwn} type="movie-card_save" label="Сохранить" />}
 			<img className="movie-card__image" src={link} alt="33 слова о дизайне" />
 			<div className="movie-card__text-container">
 				<p className="movie-card__title">
