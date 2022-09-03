@@ -55,5 +55,17 @@
       line-height: 15px;
       color: #000000;
     }
+    &_sign-form-submit {
+      width: 100%;
+      background: #ff6838;
+      border-radius: 3px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      color: #ffffff;
+      height: 45px;
+    }
   }
 }
