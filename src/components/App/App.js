@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import {
+	Redirect, Route, Switch, useRouteMatch,
+} from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
+// import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
 	// eslint-disable-next-line no-unused-vars
@@ -15,12 +19,14 @@ function App() {
 	const noHeaderShown = [
 		'/signin',
 		'/signup',
+		'/404',
 	];
 
 	const noFooterShown = [
 		'/signin',
 		'/signup',
 		'/profile',
+		'/404',
 	];
 
 	return (
@@ -45,7 +51,10 @@ function App() {
 				<Route path="/profile">
 					<Profile />
 				</Route>
-
+				<Route path="/404">
+					<NotFoundPage />
+				</Route>
+				<Redirect to="/404" />
 			</Switch>
 			{useRouteMatch(noFooterShown) ? null : (<Footer />)}
 		</div>
