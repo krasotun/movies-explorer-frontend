@@ -28,10 +28,14 @@ function App() {
 		'/profile',
 		'/404',
 	];
-
+	const onMenuClick = () => {
+		console.log('Clicked');
+	};
 	return (
 		<div className="app">
-			{useRouteMatch(noHeaderShown) ? null : (<Header isLoggedIn={isLoggedIn} />)}
+			{useRouteMatch(noHeaderShown)
+				? null
+				: (<Header onClick={onMenuClick} isLoggedIn={isLoggedIn} />)}
 			<Switch>
 				<Route exact path="/">
 					<Main />

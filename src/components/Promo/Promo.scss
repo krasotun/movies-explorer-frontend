@@ -1,3 +1,4 @@
+@import "../../utils/mixins/adaptive.scss";
 .promo {
   min-height: 524px;
   background: #465dff;
@@ -18,5 +19,8 @@
     font-size: 50px;
     line-height: 58px;
     color: #ffffff;
+    @include media-tablet {
+      color: red;
+    }
   }
 }

@@ -1,4 +1,7 @@
+@import "./utils/mixins/adaptive.scss";
+
 @import "./vendor/normalize.css";
+
 @import "./vendor/fonts/fonts.css";
 
 @import "./components/App/App";
@@ -43,3 +46,4 @@
 @import "./components/Register/Register";
 @import "./components/Profile/Profile";
 @import "./components/NotFoundPage/NotFoundPage";
+@import "./components/MenuIconOpen/MenuIconOpen";

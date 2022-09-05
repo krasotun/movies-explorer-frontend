@@ -1,3 +1,4 @@
+@import "../../utils/mixins/adaptive.scss";
 .navigation {
   &__list {
     display: flex;
@@ -5,6 +6,9 @@
     align-items: center;
     &_logged {
       gap: 20px;
+      @include media-tablet {
+        display: none;
+      }
     }
   }
   &__item {

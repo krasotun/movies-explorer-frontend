@@ -1,3 +1,4 @@
+@import "../../utils/mixins/adaptive.scss";
 .button {
   cursor: pointer;
   border: none;
@@ -83,6 +84,20 @@
       background: transparent;
       color: #ff6838;
       margin-top: 186px;
+    }
+    &_menu-icon {
+      &-open {
+        padding: 0;
+        display: none;
+        background: transparent;
+        @include media-tablet {
+          display: block;
+        }
+        @include media-mobile {
+          width: 22px;
+          height: 22px;
+        }
+      }
     }
   }
 }

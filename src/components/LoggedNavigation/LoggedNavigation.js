@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import AccountIcon from '../AccountIcon/AccountIcon';
+import MenuIconOpen from '../MenuIconOpen/MenuIconOpen';
+import Button from '../Button/Button';
 
-function LoggedNavigation() {
+function LoggedNavigation({ onClick }) {
 	return (
 		<nav className="navigation">
 			<ul className="navigation__list navigation__list_logged">
@@ -25,6 +27,11 @@ function LoggedNavigation() {
 					<AccountIcon />
 				</div>
 			</ul>
+			<Button
+				onClick={onClick}
+				type="menu-icon-open"
+				label={<MenuIconOpen />}
+			/>
 		</nav>
 	);
 }
