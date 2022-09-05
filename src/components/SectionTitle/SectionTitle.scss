@@ -4,10 +4,13 @@
   font-size: 22px;
   line-height: 27px;
   color: #000000;
-  outline: 1ps red solid;
   margin: 0;
   padding: 0;
   position: relative;
+  @include media-mobile {
+    font-size: 18px;
+    line-height: 22px;
+  }
   &::after {
     content: "";
     position: absolute;
@@ -16,5 +19,8 @@
     height: 1px;
     bottom: -23px;
     left: 0;
+    @include media-mobile {
+      bottom: -28px;
+    }
   }
 }

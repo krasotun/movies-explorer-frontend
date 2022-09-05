@@ -7,15 +7,16 @@ import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
-// import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import SideMenu from '../SideMenu/SideMenu';
 
 function App() {
 	// eslint-disable-next-line no-unused-vars
 	const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+	const [isMenuShown, setIsMenuShown] = React.useState(true);
 	const noHeaderShown = [
 		'/signin',
 		'/signup',
@@ -28,14 +29,18 @@ function App() {
 		'/profile',
 		'/404',
 	];
-	const onMenuClick = () => {
-		console.log('Clicked');
+
+	const toggleMenuShown = () => {
+		if (isMenuShown) {
+			setIsMenuShown(false);
+		} else setIsMenuShown(true);
 	};
+
 	return (
 		<div className="app">
 			{useRouteMatch(noHeaderShown)
 				? null
-				: (<Header onClick={onMenuClick} isLoggedIn={isLoggedIn} />)}
+				: (<Header onClick={toggleMenuShown} isLoggedIn={isLoggedIn} />)}
 			<Switch>
 				<Route exact path="/">
 					<Main />
@@ -61,6 +66,7 @@ function App() {
 				<Redirect to="/404" />
 			</Switch>
 			{useRouteMatch(noFooterShown) ? null : (<Footer />)}
+			{isMenuShown && <SideMenu onClick={toggleMenuShown} />}
 		</div>
 	);
 }

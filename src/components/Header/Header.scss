@@ -10,9 +10,9 @@
     background: transparent;
   }
   @include media-tablet {
-    padding: 0 42px;
+    padding: 0 38px;
   }
   @include media-mobile {
-    padding: 0 26px;
+    padding: 0 15px;
   }
 }

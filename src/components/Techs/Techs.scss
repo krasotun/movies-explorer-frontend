@@ -1,5 +1,12 @@
 .techs {
   padding: 110px 70px;
+  @include media-tablet {
+    padding: 90px 50px;
+  }
+  @include media-mobile {
+    padding: 70px 18px;
+    background-color: white;
+  }
   background-color: #f5f5f5;
   &__content-block {
     margin-top: 90px;
@@ -14,6 +21,10 @@
     font-size: 50px;
     line-height: 58px;
     color: #000000;
+    @media screen and (max-width: 458px) {
+      font-size: 30px;
+      line-height: 36px;
+    }
   }
   &__description {
     margin-top: 26px;
@@ -24,12 +35,35 @@
     color: #000000;
     width: 460px;
     text-align: center;
+    @include media-tablet {
+      font-size: 12px;
+      line-height: 18px;
+    }
+    @media screen and (max-width: 458px) {
+      width: 90%;
+    }
+    @include media-mobile {
+      width: 292px;
+      font-size: 11px;
+      line-height: 16px;
+    }
   }
   &-list {
     margin-top: 100px;
     display: flex;
     gap: 10px;
+    padding-left: 0;
     list-style-type: none;
+    @include media-tablet {
+      margin-top: 83px;
+    }
+    @media screen and (max-width: 667px) {
+      flex-wrap: wrap;
+    }
+    @include media-mobile {
+      margin-top: 50px;
+      max-width: 178px;
+    }
     &__item {
       display: flex;
       align-items: center;
@@ -43,6 +77,12 @@
       font-size: 14px;
       line-height: 17px;
       text-align: center;
+      @include media-tablet {
+        width: 84px;
+        height: 57px;
+        font-size: 12px;
+        line-height: 15px;
+      }
     }
   }
 }

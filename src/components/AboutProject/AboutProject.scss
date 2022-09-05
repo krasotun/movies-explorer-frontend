@@ -1,11 +1,24 @@
 .about-project {
-  padding: 110px 70px;
+  padding: 100px 70px;
+  @include media-tablet {
+    padding: 90px 50px;
+  }
+  @include media-mobile {
+    padding: 70px 18px;
+  }
   &__articles-section {
     margin-top: 70px;
     display: flex;
+    @media screen and (max-width: 514px) {
+      margin-top: 60px;
+      flex-direction: column;
+    }
   }
   &-article {
     max-width: 550px;
+    @include media-tablet {
+      max-width: 319px;
+    }
     &__title {
       margin: 0;
       font-style: normal;
@@ -14,6 +27,10 @@
       line-height: 24px;
       letter-spacing: -0.04em;
       color: #000000;
+      @include media-mobile {
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
     &__text {
       margin-top: 26px;
@@ -22,6 +39,15 @@
       font-size: 14px;
       line-height: 20px;
       color: #000000;
+      @include media-tablet {
+        font-size: 12px;
+        line-height: 18px;
+      }
+      @include media-mobile {
+        margin-top: 22px;
+        font-size: 11px;
+        line-height: 16px;
+      }
     }
   }
   &-progress {
@@ -43,7 +69,7 @@
       margin: 0;
       align-items: center;
       justify-content: center;
-      height: 36px;
+      height: 35px;
       font-style: normal;
       font-weight: 400;
       font-size: 14px;

@@ -1,13 +1,37 @@
-@import "../../utils/mixins/adaptive.scss";
 .navigation {
+  &_vertical {
+    height: 100vh;
+  }
   &__list {
     display: flex;
     list-style-type: none;
     align-items: center;
+    &_vertical {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding-bottom: 92px;
+      box-sizing: border-box;
+      padding-top: 159px;
+      margin: 0;
+    }
     &_logged {
       gap: 20px;
       @include media-tablet {
         display: none;
+      }
+    }
+  }
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    &_vertical {
+      flex-direction: column;
+      gap: 28px;
+      @include media-mobile {
+        gap: 24px;
       }
     }
   }
@@ -26,6 +50,10 @@
     }
     &_logged {
       color: #000000;
+      @include media-tablet {
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
   }
   &__account {
@@ -33,5 +61,8 @@
     align-items: center;
     gap: 13px;
     margin-left: 50px;
+    &_vertical {
+      margin-left: 0;
+    }
   }
 }

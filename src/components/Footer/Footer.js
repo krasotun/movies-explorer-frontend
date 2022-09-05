@@ -7,7 +7,7 @@ function Footer() {
 		<footer className="footer">
 			<p className="footer__title">{footerTitle}</p>
 			<div className="footer__content-block">
-				<p className="footer__text">
+				<p className="footer__date">
 					{`(c) ${currentYear}`}
 				</p>
 				<div className="footer__links">
