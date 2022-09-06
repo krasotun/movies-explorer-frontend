@@ -4,21 +4,21 @@ function NavTab() {
 	const tabsData = [
 		{
 			title: 'О проекте',
-			link: '/',
+			link: '#about-project',
 			itemClassName: 'navigation-tab__list-item',
 			linkClassName: 'navigation-tab__list-link',
 			id: 1,
 		},
 		{
 			title: 'Технологии',
-			link: '/',
+			link: '#techs',
 			itemClassName: 'navigation-tab__list-item',
 			linkClassName: 'navigation-tab__list-link',
 			id: 2,
 		},
 		{
 			title: 'Студент',
-			link: '/',
+			link: '#student',
 			itemClassName: 'navigation-tab__list-item',
 			linkClassName: 'navigation-tab__list-link',
 			id: 3,

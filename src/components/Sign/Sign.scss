@@ -1,8 +1,10 @@
 .sign {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   height: 100vh;
+
   &-form {
     padding: 70px 0;
     width: 396px;
@@ -10,6 +12,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    @media screen and (max-width: 432px) {
+      width: 260px;
+    }
     &__title {
       margin: 0;
     }
@@ -73,6 +78,10 @@
     font-size: 14px;
     line-height: 17px;
     color: #a0a0a0;
+    @media screen and (max-width: 432px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
   &__link {
     font-style: normal;
@@ -81,5 +90,9 @@
     line-height: 17px;
     text-decoration: none;
     color: #ff6838;
+    @media screen and (max-width: 432px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 }

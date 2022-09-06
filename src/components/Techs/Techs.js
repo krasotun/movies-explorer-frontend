@@ -40,7 +40,7 @@ function Techs() {
 		</li>
 	));
 	return (
-		<section className="techs">
+		<section className="techs" id="techs">
 			<SectionTitle
 				title="Технологии"
 			/>

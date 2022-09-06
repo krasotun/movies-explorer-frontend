@@ -21,11 +21,11 @@
   }
   &__close {
     position: absolute;
-    top: 29px;
-    right: 29px;
+    top: 20px;
+    right: 38px;
     @include media-mobile {
-      top: 20px;
-      right: 20px;
+      top: 25px;
+      right: 15px;
     }
   }
 }

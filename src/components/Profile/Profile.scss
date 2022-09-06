@@ -12,6 +12,12 @@
     align-items: center;
     width: 410px;
     height: 100%;
+    @media screen and (max-width: 430px) {
+      width: 330px;
+    }
+    @media screen and (max-width: 346px) {
+      width: 260px;
+    }
     &__container {
       width: 100%;
       &_bottom {

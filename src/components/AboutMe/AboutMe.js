@@ -10,7 +10,7 @@ function AboutMe() {
 		link: 'https://github.com/krasotun/',
 	};
 	return (
-		<section className="student">
+		<section className="student" id="student">
 			<SectionTitle
 				title="Студент"
 			/>

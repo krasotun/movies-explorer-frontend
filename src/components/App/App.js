@@ -16,7 +16,7 @@ import SideMenu from '../SideMenu/SideMenu';
 function App() {
 	// eslint-disable-next-line no-unused-vars
 	const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-	const [isMenuShown, setIsMenuShown] = React.useState(true);
+	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const noHeaderShown = [
 		'/signin',
 		'/signup',

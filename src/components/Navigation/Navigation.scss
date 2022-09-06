@@ -45,6 +45,7 @@
     cursor: pointer;
     opacity: 1;
     transition: opacity 0.3s ease;
+
     &:hover {
       opacity: 0.7;
     }
@@ -55,6 +56,9 @@
         line-height: 22px;
       }
     }
+  }
+  &__item.active {
+    color: #ff6838;
   }
   &__account {
     display: flex;

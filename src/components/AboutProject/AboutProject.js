@@ -28,7 +28,7 @@ function AboutProject() {
 		</div>
 	));
 	return (
-		<section className="about-project">
+		<section className="about-project" id="about-project">
 			<SectionTitle
 				title="О проекте"
 			/>

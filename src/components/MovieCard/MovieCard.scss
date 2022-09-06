@@ -1,6 +1,5 @@
 .movie-card {
   position: relative;
-  width: 360px;
   &__text-container {
     display: flex;
     justify-content: space-between;
@@ -26,5 +25,18 @@
     background: #f9f9f9;
     border-radius: 3px;
     padding: 3px 4px;
+  }
+  &__image {
+    width: 360px;
+    height: 201px;
+    object-fit: cover;
+    @media screen and (max-width: 900px) {
+      width: 339px;
+      height: 190px;
+    }
+    @media screen and (max-width: 847px) {
+      width: 300px;
+      height: 168px;
+    }
   }
 }
