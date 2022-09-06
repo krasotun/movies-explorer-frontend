@@ -9,8 +9,8 @@ import Preloader from '../Preloader/Preloader';
 function MoviesCardList({ moreButtonShown }) {
 	return (
 		<section className="movies">
+			<Preloader />
 			<div className="movies__cards-container">
-				<Preloader />
 				<MovieCard
 					name="33 слова о дизайне"
 					link={firstImagePath}
