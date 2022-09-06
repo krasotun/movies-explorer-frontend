@@ -3,6 +3,8 @@ import {
 	Redirect, Route, Switch, useRouteMatch,
 } from 'react-router-dom';
 import { auth } from '../../utils/Auth';
+import { CurrentUserContext } from '../../contexts/CurrenUserContext';
+
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -19,6 +21,8 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = React.useState(true);
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
+	// eslint-disable-next-line no-unused-vars
+	const [currentUser, setCurrentUser] = React.useState({});
 	const noHeaderShown = [
 		'/signin',
 		'/signup',
@@ -53,38 +57,40 @@ function App() {
 
 	return (
 		<div className="app">
-			{useRouteMatch(noHeaderShown)
-				? null
-				: (<Header onClick={toggleMenuShown} isLoggedIn={isLoggedIn} />)}
-			<Switch>
-				<Route exact path="/">
-					<Main />
-				</Route>
-				<Route path="/saved-movies">
-					<SavedMovies />
-				</Route>
-				<Route path="/movies">
-					<Movies />
-				</Route>
-				<Route path="/signin">
-					<Login />
-				</Route>
-				<Route path="/signup">
-					<Register
-						onRegistration={handleRegistration}
-						isInfoTipShown={isInfoTipShown}
-					/>
-				</Route>
-				<Route path="/profile">
-					<Profile />
-				</Route>
-				<Route path="/404">
-					<NotFoundPage />
-				</Route>
-				<Redirect to="/404" />
-			</Switch>
-			{useRouteMatch(noFooterShown) ? null : (<Footer />)}
-			{isMenuShown && <SideMenu onClick={toggleMenuShown} />}
+			<CurrentUserContext.Provider value={currentUser}>
+				{useRouteMatch(noHeaderShown)
+					? null
+					: (<Header onClick={toggleMenuShown} isLoggedIn={isLoggedIn} />)}
+				<Switch>
+					<Route exact path="/">
+						<Main />
+					</Route>
+					<Route path="/saved-movies">
+						<SavedMovies />
+					</Route>
+					<Route path="/movies">
+						<Movies />
+					</Route>
+					<Route path="/signin">
+						<Login />
+					</Route>
+					<Route path="/signup">
+						<Register
+							onRegistration={handleRegistration}
+							isInfoTipShown={isInfoTipShown}
+						/>
+					</Route>
+					<Route path="/profile">
+						<Profile />
+					</Route>
+					<Route path="/404">
+						<NotFoundPage />
+					</Route>
+					<Redirect to="/404" />
+				</Switch>
+				{useRouteMatch(noFooterShown) ? null : (<Footer />)}
+				{isMenuShown && <SideMenu onClick={toggleMenuShown} />}
+			</CurrentUserContext.Provider>
 		</div>
 	);
 }

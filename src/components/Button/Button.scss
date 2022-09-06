@@ -4,6 +4,9 @@
   border: none;
   opacity: 1;
   transition: opacity 0.3s ease;
+  &:disabled {
+    cursor: none;
+  }
   &:hover {
     opacity: 0.7;
   }
@@ -67,6 +70,9 @@
       text-align: center;
       color: #ffffff;
       height: 45px;
+      &:disabled {
+        background: gray;
+      }
     }
     &_profile-form-submit {
       font-style: normal;

@@ -19,7 +19,7 @@ function Register({ onRegistration, isInfoTipShown }) {
 		event.preventDefault();
 		onRegistration(name, email, password);
 	}
-
+	const isButtonDisable = true;
 	return (
 		<section className="sign">
 			<Sign
@@ -32,6 +32,7 @@ function Register({ onRegistration, isInfoTipShown }) {
 				// eslint-disable-next-line react/jsx-no-bind
 				onSubmit={handleRegistration}
 				isInfoTipShown={isInfoTipShown}
+				buttonDisabled={isButtonDisable}
 			>
 				<label className="sign-form__label" htmlFor="name">
 					Имя

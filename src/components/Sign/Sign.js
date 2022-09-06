@@ -6,7 +6,7 @@ import InfoTip from '../InfoTip/InfoTip';
 
 function Sign({
 	title, children, buttonText, questionTitle, bottomLink,
-	bottomLinkText, formType, onSubmit, isInfoTipShown,
+	bottomLinkText, formType, onSubmit, isInfoTipShown, buttonDisabled,
 }) {
 	return (
 		<form className={`form ${formType}-form`} onSubmit={onSubmit}>
@@ -21,6 +21,7 @@ function Sign({
 					messageText="Ошибка при регистрации"
 				/>
 				<Button
+					buttonDisabled={buttonDisabled}
 					formSubmitButton
 					label={buttonText}
 					type={`${formType}-form-submit`}

@@ -22,9 +22,28 @@ class Auth {
 			}),
 		}).then(this._checkServerStatus);
 	}
+
+	authorization(email, password) {
+		return fetch(`${this._baseUrl}/signin`, {
+			method: 'POST',
+			headers: this._headers,
+			body: JSON.stringify({
+				email,
+				password,
+			}),
+		}).then(this._checkServerStatus);
+	}
+
+	checkTokenValidity(token) {
+		return fetch(`${this._baseUrl}/users/me`, {
+			method: 'GET',
+			headers: {
+				...this._headers, Authorization: `Bearer ${token}`,
+			},
+		}).then(this._checkServerStatus);
+	}
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const auth = new Auth({
 	baseUrl: 'https://api.krasotun.nomoredomains.sbs',
 	headers: {

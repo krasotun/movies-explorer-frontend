@@ -1,10 +1,11 @@
 import React from 'react';
 
 function Button({
-	type, label, onClick, formSubmitButton,
+	type, label, onClick, formSubmitButton, buttonDisabled,
 }) {
+	console.log(buttonDisabled);
 	return (
-		<button type={formSubmitButton ? 'submit' : 'button'} className={`button button_type_${type}`} onClick={onClick}>
+		<button disabled={buttonDisabled} type={formSubmitButton ? 'submit' : 'button'} className={`button button_type_${type}`} onClick={onClick}>
 			{label}
 		</button>
 	);

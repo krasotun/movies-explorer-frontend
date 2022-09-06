@@ -4,7 +4,6 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-
   &-form {
     padding: 70px 0;
     width: 396px;
@@ -67,6 +66,9 @@
       border: transparent;
       padding: 0;
       border-bottom: 1px #e8e8e8 solid;
+      &_error {
+        border-bottom: 1px red solid;
+      }
       &:focus {
         outline: transparent;
         border-bottom: 1px #ff6838 solid;
