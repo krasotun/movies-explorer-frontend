@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* krasotun@84.201.164.144:/home/krasotun/movies-frontend",
+    "deploy": "npm run build && scp -r ./build/* krasotun@158.160.9.106:/home/krasotun/movies-frontend",
     "lint": "npx eslint ."
   },
   "eslintConfig": {
