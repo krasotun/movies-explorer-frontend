@@ -2,19 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import InfoTip from '../InfoTip/InfoTip';
 
 function Sign({
-	title, children, buttonText, questionTitle, bottomLink, bottomLinkText, formType,
+	title, children, buttonText, questionTitle, bottomLink,
+	bottomLinkText, formType, onSubmit, isInfoTipShown,
 }) {
 	return (
-		<form className={`form ${formType}-form`}>
+		<form className={`form ${formType}-form`} onSubmit={onSubmit}>
 			<div className={`${formType}-form__container`}>
 				{(formType === 'sign') && <Logo />}
 				<h2 className={`${formType}-form__title`}>{title}</h2>
 				{children}
 			</div>
 			<div className={`${formType}-form__container_bottom`}>
+				<InfoTip
+					isInfoTipShown={isInfoTipShown}
+					messageText="Ошибка при регистрации"
+				/>
 				<Button
+					formSubmitButton
 					label={buttonText}
 					type={`${formType}-form-submit`}
 				/>

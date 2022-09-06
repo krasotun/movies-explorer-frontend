@@ -1,8 +1,10 @@
 import React from 'react';
 
-function Button({ type, label, onClick }) {
+function Button({
+	type, label, onClick, formSubmitButton,
+}) {
 	return (
-		<button type="button" className={`button button_type_${type}`} onClick={onClick}>
+		<button type={formSubmitButton ? 'submit' : 'button'} className={`button button_type_${type}`} onClick={onClick}>
 			{label}
 		</button>
 	);

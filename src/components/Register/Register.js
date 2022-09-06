@@ -1,7 +1,25 @@
 import React from 'react';
 import Sign from '../Sign/Sign';
 
-function Register() {
+function Register({ onRegistration, isInfoTipShown }) {
+	const [name, setName] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+
+	function handleNameChange(event) {
+		setName(event.target.value);
+	}
+	function handleEmailChange(event) {
+		setEmail(event.target.value);
+	}
+	function handlePasswordChange(event) {
+		setPassword(event.target.value);
+	}
+	function handleRegistration(event) {
+		event.preventDefault();
+		onRegistration(name, email, password);
+	}
+
 	return (
 		<section className="sign">
 			<Sign
@@ -11,43 +29,43 @@ function Register() {
 				bottomLink="/signin"
 				bottomLinkText="Войти"
 				formType="sign"
+				// eslint-disable-next-line react/jsx-no-bind
+				onSubmit={handleRegistration}
+				isInfoTipShown={isInfoTipShown}
 			>
 				<label className="sign-form__label" htmlFor="name">
 					Имя
 					<input
-						required
 						className="form__item sign-form__item"
-						id="name"
-						type="name"
-						name="mane"
+						type="text"
+						name="name"
 						placeholder="Марат"
-						value="Марат"
+						value={name || ''}
+						onChange={handleNameChange}
 					/>
 				</label>
 				<span className="sign-form__error"><p className="sign-form__error-text sign-form__error-text_hidden ">Что то пошло не так...</p></span>
 				<label className="sign-form__label" htmlFor="email">
 					E-mail
 					<input
-						required
 						className="form__item sign-form__item"
-						id="email"
-						type="email"
+						type="text"
 						name="email"
 						placeholder="E-mail"
-						value=""
+						value={email || ''}
+						onChange={handleEmailChange}
 					/>
 				</label>
 				<span className="sign-form__error"><p className="sign-form__error-text sign-form__error-text_hidden ">Что то пошло не так...</p></span>
 				<label className="sign-form__label" htmlFor="password">
 					Пароль
 					<input
-						required
 						className="form__item sign-form__item"
-						id="password"
 						type="password"
 						name="password"
 						placeholder="******"
-						value=""
+						value={password || ''}
+						onChange={handlePasswordChange}
 					/>
 				</label>
 				<span className="sign-form__error"><p className="sign-form__error-text ">Что то пошло не так...</p></span>
