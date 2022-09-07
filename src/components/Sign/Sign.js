@@ -9,8 +9,10 @@ function Sign({
 	return (
 		<form className={`form ${formType}-form`}>
 			<div className={`${formType}-form__container`}>
-				{(formType === 'sign') && <Logo />}
-				<h2 className={`${formType}-form__title`}>{title}</h2>
+				<div className={`form ${formType}-form__title-container`}>
+					{(formType === 'sign') && <Logo />}
+					<h2 className={`${formType}-form__title`}>{title}</h2>
+				</div>
 				{children}
 			</div>
 			<div className={`${formType}-form__container_bottom`}>

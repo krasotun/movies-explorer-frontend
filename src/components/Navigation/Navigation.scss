@@ -1,9 +1,9 @@
 .navigation {
-  a {
+  .navigation__item {
     color: #ffffff;
   }
   &_dark {
-    a {
+    .navigation__item {
       color: #000000;
     }
   }
@@ -50,19 +50,15 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    // color: #ffffff;
     cursor: pointer;
     opacity: 1;
     transition: opacity 0.3s ease;
     &:hover {
       opacity: 0.7;
     }
-    &_dark {
-      // color: #000000;
-      @include media-tablet {
-        font-size: 18px;
-        line-height: 22px;
-      }
+    @include media-tablet {
+      font-size: 18px;
+      line-height: 22px;
     }
   }
   &__item.active {

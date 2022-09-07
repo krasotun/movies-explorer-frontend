@@ -72,6 +72,14 @@
         border-bottom: 1px #ff6838 solid;
       }
     }
+    &__title-container {
+      @media screen and (max-width: 432px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
   &__question {
     font-weight: 400;
