@@ -20,14 +20,14 @@ function Portfolio() {
 		},
 	];
 	const portfolioContent = portfolioData.map((item) => (
-		<li className="portfolio__item" key={item.id}>
-			<p className="portfolio__text">
-				{item.title}
-			</p>
-			<ArrowLink
-				link={item.link}
-			/>
-		</li>
+		<a className="portfolio__link" target="_blanc" href={item.link}>
+			<li className="portfolio__item" key={item.id}>
+				<p className="portfolio__text">
+					{item.title}
+				</p>
+				<ArrowLink />
+			</li>
+		</a>
 	));
 	return (
 		<section className="portfolio">
