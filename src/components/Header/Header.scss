@@ -1,0 +1,18 @@
+@import "../../utils/mixins/adaptive.scss";
+.header {
+  padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #465dff;
+  height: 74px;
+  &_transparent {
+    background: transparent;
+  }
+  @include media-tablet {
+    padding: 0 38px;
+  }
+  @include media-mobile {
+    padding: 0 15px;
+  }
+}

@@ -1,0 +1,104 @@
+.student {
+  padding: 110px 70px;
+  @include media-tablet {
+    padding: 90px 50px;
+  }
+  @media screen and (max-width: 536px) {
+    padding: 70px 14px;
+  }
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 66px;
+    @media screen and (max-width: 758px) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+  &-text-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    @media screen and (max-width: 1014px) {
+      width: 450px;
+    }
+
+    @media screen and (max-width: 536px) {
+      width: 90%;
+    }
+  }
+  &__name {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    color: #000000;
+    @include media-tablet {
+      font-size: 40px;
+      line-height: 40px;
+    }
+
+    @include media-mobile {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+  &__job {
+    margin-top: 18px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    @include media-tablet {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    @include media-mobile {
+      font-size: 11px;
+      line-height: 16px;
+    }
+  }
+  &__description {
+    margin-top: 26px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #000000;
+    @include media-tablet {
+      font-size: 11px;
+      line-height: 16px;
+    }
+  }
+  &__github {
+    margin-top: 99px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    text-decoration: none;
+    @include media-tablet {
+      margin-top: 87px;
+    }
+  }
+  &__photo {
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+    background-image: url("../../images/student-photo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    @media screen and (max-width: 1014px) {
+      width: 255px;
+      height: 307px;
+    }
+    @media screen and (max-width: 364px) {
+      width: 292px;
+      height: 352px;
+    }
+  }
+}

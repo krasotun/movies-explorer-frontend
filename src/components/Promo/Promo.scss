@@ -1,0 +1,32 @@
+.promo {
+  background: #465dff;
+  min-height: 524px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../images/promo-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  @include media-tablet {
+    min-height: 784px;
+  }
+  @include media-mobile {
+    min-height: 570px;
+  }
+  &__title {
+    text-align: center;
+    margin: 0;
+    width: 730px;
+    display: block;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    color: #ffffff;
+    @include media-mobile {
+      font-size: 31px;
+      line-height: 39px;
+    }
+  }
+}

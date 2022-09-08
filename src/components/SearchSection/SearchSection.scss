@@ -1,0 +1,9 @@
+.search {
+  padding: 60px 70px;
+  @include media-tablet {
+    padding: 80px 30px 60px 30px;
+  }
+  @include media-mobile {
+    padding: 80px 14px 60px 14px;
+  }
+}

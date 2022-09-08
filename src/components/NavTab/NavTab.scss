@@ -1,0 +1,37 @@
+.navigation-tab {
+  background: #f5f5f5;
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__list {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    list-style-type: none;
+    @include media-tablet {
+      gap: 40px;
+    }
+    @include media-mobile {
+      gap: 24px;
+    }
+    &-link {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      text-decoration-line: underline;
+      color: #000000;
+      opacity: 1;
+      @include media-mobile {
+        font-size: 11px;
+      }
+      &:hover {
+        opacity: 0.7;
+        transition: 0.3s ease;
+      }
+    }
+  }
+}
