@@ -1,11 +1,29 @@
 import React from 'react';
+import { CurrentUserContext } from '../../contexts/CurrenUserContext';
+
 import Sign from '../Sign/Sign';
 
 function Profile() {
+	const currentUser = React.useContext(CurrentUserContext);
+	const [name, setName] = React.useState('');
+	const [email, setEmail] = React.useState('');
+
+	function handleNameChange(event) {
+		setName(event.target.value);
+	}
+	function handleEmailChange(event) {
+		setEmail(event.target.value);
+	}
+
+	React.useEffect(() => {
+		setName(currentUser.name);
+		setEmail(currentUser.email);
+	}, [currentUser]);
+
 	return (
 		<section className="profile">
 			<Sign
-				title="Привет, Марат!"
+				title={`Привет, ${currentUser.name}`}
 				buttonText="Редактировать"
 				questionTitle="Ещё не зарегистрированы?"
 				bottomLink="/"
@@ -24,7 +42,8 @@ function Profile() {
 							type="email"
 							name="email"
 							placeholder="E-mail"
-							value="marat@marat.ru"
+							value={email || ''}
+							onChange={handleEmailChange}
 						/>
 					</div>
 					<div className="profile-form__input">
@@ -38,7 +57,8 @@ function Profile() {
 							type="name"
 							name="name"
 							placeholder="Марат"
-							value="Марат"
+							value={name || ''}
+							onChange={handleNameChange}
 						/>
 					</div>
 				</div>

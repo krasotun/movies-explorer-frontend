@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-	Redirect, Route, Switch, useRouteMatch,
+	Redirect, Route, Switch, useRouteMatch, useHistory,
 } from 'react-router-dom';
 import { auth } from '../../utils/Auth';
+import { userInfo } from '../../utils/UserInfo';
 import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
 import Footer from '../Footer/Footer';
@@ -18,12 +19,13 @@ import SideMenu from '../SideMenu/SideMenu';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
-	// eslint-disable-next-line no-unused-vars
+	const history = useHistory();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
-	// eslint-disable-next-line no-unused-vars
-	const [currentUser, setCurrentUser] = React.useState({});
+	const [formErrorMessage, setFormErrorMessage] = React.useState('');
+	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+
 	const noHeaderShown = [
 		'/signin',
 		'/signup',
@@ -44,17 +46,60 @@ function App() {
 	};
 
 	const handleRegistration = (name, email, password) => {
-		console.log('Sended');
 		auth.registration(name, email, password)
 			.then((res) => {
 				console.log(res);
 				// setInfoTipShown(true);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
 				setInfoTipShown(true);
+				setFormErrorMessage('Ошибка при регистрации');
 			});
 	};
+	const handleTokenCheck = React.useCallback(() => {
+		const token = localStorage.getItem('jwt');
+		auth.checkTokenValidity(token)
+			.then(() => {
+				setIsLoggedIn(true);
+				history.push('/movies');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [history]);
+
+	React.useEffect(() => {
+		const token = localStorage.getItem('jwt');
+		if (token) {
+			handleTokenCheck();
+		}
+	}, [handleTokenCheck]);
+
+	const handleLogin = (email, password) => {
+		auth.authorization(email, password)
+			.then((res) => {
+				setIsLoggedIn(true);
+				localStorage.setItem('jwt', res.token);
+				history.push('/movies');
+				handleTokenCheck();
+			})
+			.catch(() => {
+				setInfoTipShown(true);
+				setFormErrorMessage('Ошибка при авторизации');
+			});
+	};
+
+	React.useEffect(() => {
+		if (isLoggedIn) {
+			userInfo.getUserInfo()
+				.then((res) => {
+					setCurrentUser(res);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [isLoggedIn]);
 
 	return (
 		<div className="app">
@@ -77,12 +122,17 @@ function App() {
 						component={Movies}
 					/>
 					<Route path="/signin">
-						<Login />
+						<Login
+							onLogin={handleLogin}
+							isInfoTipShown={isInfoTipShown}
+							formErrorMessage={formErrorMessage}
+						/>
 					</Route>
 					<Route path="/signup">
 						<Register
 							onRegistration={handleRegistration}
 							isInfoTipShown={isInfoTipShown}
+							formErrorMessage={formErrorMessage}
 						/>
 					</Route>
 					<ProtectedRoute

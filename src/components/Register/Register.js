@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import Sign from '../Sign/Sign';
 
-function Register({ isInfoTipShown, onRegistration }) {
+function Register({ isInfoTipShown, onRegistration, formErrorMessage }) {
 	const [name, setName] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
@@ -11,8 +11,7 @@ function Register({ isInfoTipShown, onRegistration }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid, isSubmitSuccessful },
-		reset,
+		formState: { errors, isValid },
 	} = useForm({ mode: 'onChange' });
 
 	React.useEffect(() => {
@@ -20,14 +19,6 @@ function Register({ isInfoTipShown, onRegistration }) {
 			setisButtonDisable(true);
 		} else setisButtonDisable(false);
 	}, [isValid]);
-
-	React.useEffect(() => {
-		if (isSubmitSuccessful) {
-			reset();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isSubmitSuccessful]);
-
 	function handleNameChange(event) {
 		setName(event.target.value);
 	}
@@ -37,10 +28,8 @@ function Register({ isInfoTipShown, onRegistration }) {
 	function handlePasswordChange(event) {
 		setPassword(event.target.value);
 	}
-
 	function handleRegistration() {
 		onRegistration(name, email, password);
-		reset();
 	}
 
 	return (
@@ -56,6 +45,7 @@ function Register({ isInfoTipShown, onRegistration }) {
 				onSubmit={handleSubmit(handleRegistration)}
 				isInfoTipShown={isInfoTipShown}
 				buttonDisabled={isButtonDisable}
+				formErrorMessage={formErrorMessage}
 			>
 				<label className="sign-form__label" htmlFor="name">
 					Имя
