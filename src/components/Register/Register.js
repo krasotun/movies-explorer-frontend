@@ -38,11 +38,10 @@ function Register({ isInfoTipShown, onRegistration }) {
 		setPassword(event.target.value);
 	}
 
-	const handleRegistration = (event) => {
+	function handleRegistration() {
 		onRegistration(name, email, password);
-		console.log('Нажали', event);
 		reset();
-	};
+	}
 
 	return (
 		<section className="sign">
@@ -105,12 +104,11 @@ function Register({ isInfoTipShown, onRegistration }) {
 					/>
 				</label>
 				<span className="sign-form__error">
-					<p className={errors?.email
-						? 'sign-form__error-text'
-						: 'sign-form__error-text sign-form__error-text_hidden'}
-					>
-						{email.message}
-					</p>
+					<ErrorMessage
+						errors={errors}
+						name="email"
+						render={({ message }) => <p className="sign-form__error-text">{message}</p>}
+					/>
 				</span>
 				<label className="sign-form__label" htmlFor="password">
 					Пароль
@@ -128,12 +126,11 @@ function Register({ isInfoTipShown, onRegistration }) {
 					/>
 				</label>
 				<span className="sign-form__error">
-					<p className={errors?.name
-						? 'sign-form__error-text'
-						: 'sign-form__error-text sign-form__error-text_hidden'}
-					>
-						{name.message}
-					</p>
+					<ErrorMessage
+						errors={errors}
+						name="password"
+						render={({ message }) => <p className="sign-form__error-text">{message}</p>}
+					/>
 				</span>
 			</Sign>
 		</section>
