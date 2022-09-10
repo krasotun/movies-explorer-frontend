@@ -45,8 +45,17 @@ function App() {
 		} else setIsMenuShown(true);
 	};
 
-	const handleEditUserInfo = () => {
+	const handleEditUserInfo = (name, email) => {
 		console.log('onEditUserInfo');
+		userInfo.setUserInfo(name, email)
+			.then((res) => {
+				setCurrentUser(res);
+				console.log(res);
+			})
+			.catch(() => {
+				setInfoTipShown(true);
+				setFormErrorMessage('Ошибка при редактировании');
+			});
 	};
 
 	const handleRegistration = (name, email, password) => {

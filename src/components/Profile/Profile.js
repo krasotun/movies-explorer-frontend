@@ -28,8 +28,7 @@ function Profile({ onEditUserInfo }) {
 		setEmail(event.target.value);
 	}
 	function handleEditUserInfo() {
-		onEditUserInfo();
-		console.log('Отредактировали');
+		onEditUserInfo(name, email);
 	}
 	React.useEffect(() => {
 		setName(currentUser.name);

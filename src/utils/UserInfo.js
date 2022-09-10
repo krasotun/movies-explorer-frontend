@@ -17,8 +17,18 @@ class UserInfo {
 			headers: this._headers,
 		}).then(this._checkServerStatus);
 	}
-}
 
+	setUserInfo(name, email) {
+		return fetch(`${this._baseUrl}/users/me`, {
+			method: 'PATCH',
+			headers: this._headers,
+			body: JSON.stringify({
+				name,
+				email,
+			}),
+		}).then(this._checkServerStatus);
+	}
+}
 const token = localStorage.getItem('jwt');
 
 export const userInfo = new UserInfo({
