@@ -27,6 +27,7 @@
     "linebreak-style": 0,
     "jsx-quotes": "warn",
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

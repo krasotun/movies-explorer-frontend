@@ -15,10 +15,11 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import SideMenu from '../SideMenu/SideMenu';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
 	// eslint-disable-next-line no-unused-vars
-	const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	// eslint-disable-next-line no-unused-vars
@@ -65,12 +66,16 @@ function App() {
 					<Route exact path="/">
 						<Main />
 					</Route>
-					<Route path="/saved-movies">
-						<SavedMovies />
-					</Route>
-					<Route path="/movies">
-						<Movies />
-					</Route>
+					<ProtectedRoute
+						isLoggedIn={isLoggedIn}
+						path="/saved-movies"
+						component={SavedMovies}
+					/>
+					<ProtectedRoute
+						isLoggedIn={isLoggedIn}
+						path="/movies"
+						component={Movies}
+					/>
 					<Route path="/signin">
 						<Login />
 					</Route>
@@ -80,9 +85,11 @@ function App() {
 							isInfoTipShown={isInfoTipShown}
 						/>
 					</Route>
-					<Route path="/profile">
-						<Profile />
-					</Route>
+					<ProtectedRoute
+						path="/profile"
+						isLoggedIn={isLoggedIn}
+						component={Profile}
+					/>
 					<Route path="/404">
 						<NotFoundPage />
 					</Route>
