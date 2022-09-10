@@ -45,6 +45,10 @@ function App() {
 		} else setIsMenuShown(true);
 	};
 
+	const handleEditUserInfo = () => {
+		console.log('onEditUserInfo');
+	};
+
 	const handleRegistration = (name, email, password) => {
 		auth.registration(name, email, password)
 			.then((res) => {
@@ -139,6 +143,7 @@ function App() {
 						path="/profile"
 						isLoggedIn={isLoggedIn}
 						component={Profile}
+						onEditUserInfo={handleEditUserInfo}
 					/>
 					<Route path="/404">
 						<NotFoundPage />

@@ -82,6 +82,9 @@
       display: flex;
       background: transparent;
       color: #000000;
+      &:disabled {
+        color: gray;
+      }
     }
     &_not-found-page-go-back {
       font-weight: 400;
