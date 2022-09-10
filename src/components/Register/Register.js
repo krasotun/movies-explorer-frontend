@@ -31,7 +31,6 @@ function Register({ isInfoTipShown, onRegistration, formErrorMessage }) {
 	function handleRegistration() {
 		onRegistration(name, email, password);
 	}
-
 	return (
 		<section className="sign">
 			<Sign
@@ -43,8 +42,8 @@ function Register({ isInfoTipShown, onRegistration, formErrorMessage }) {
 				formType="sign"
 				// eslint-disable-next-line react/jsx-no-bind
 				onSubmit={handleSubmit(handleRegistration)}
-				isInfoTipShown={isInfoTipShown}
 				buttonDisabled={isButtonDisable}
+				isInfoTipShown={isInfoTipShown}
 				formErrorMessage={formErrorMessage}
 			>
 				<label className="sign-form__label" htmlFor="name">

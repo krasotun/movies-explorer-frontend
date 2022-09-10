@@ -37,8 +37,8 @@ function Login({ isInfoTipShown, onLogin, formErrorMessage }) {
 				bottomLinkText="Регистрация"
 				formType="sign"
 				onSubmit={handleSubmit(handleLogin)}
-				isInfoTipShown={isInfoTipShown}
 				buttonDisabled={isButtonDisable}
+				isInfoTipShown={isInfoTipShown}
 				formErrorMessage={formErrorMessage}
 			>
 				<label className="sign-form__label" htmlFor="email">

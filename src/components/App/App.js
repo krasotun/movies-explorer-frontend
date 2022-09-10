@@ -50,9 +50,9 @@ function App() {
 		userInfo.setUserInfo(name, email)
 			.then((res) => {
 				setCurrentUser(res);
-				console.log(res);
 			})
-			.catch(() => {
+			.catch((err) => {
+				console.log('Попали', err);
 				setInfoTipShown(true);
 				setFormErrorMessage('Ошибка при редактировании');
 			});
@@ -113,7 +113,6 @@ function App() {
 				});
 		}
 	}, [isLoggedIn]);
-
 	return (
 		<div className="app">
 			<CurrentUserContext.Provider value={currentUser}>
@@ -153,6 +152,8 @@ function App() {
 						isLoggedIn={isLoggedIn}
 						component={Profile}
 						onEditUserInfo={handleEditUserInfo}
+						isInfoTipShown={isInfoTipShown}
+						formErrorMessage={formErrorMessage}
 					/>
 					<Route path="/404">
 						<NotFoundPage />

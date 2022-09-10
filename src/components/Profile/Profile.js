@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 import Sign from '../Sign/Sign';
 
-function Profile({ onEditUserInfo }) {
+function Profile({ isInfoTipShown, onEditUserInfo, formErrorMessage }) {
 	const currentUser = React.useContext(CurrentUserContext);
 	const [name, setName] = React.useState('');
 	const [email, setEmail] = React.useState('');
@@ -44,7 +44,6 @@ function Profile({ onEditUserInfo }) {
 			setisButtonDisable(true);
 		}
 	}, [name, email, currentUser.name, currentUser.email, isValid]);
-
 	return (
 		<section className="profile">
 			<Sign
@@ -56,6 +55,8 @@ function Profile({ onEditUserInfo }) {
 				formType="profile"
 				buttonDisabled={isButtonDisable}
 				onSubmit={handleSubmit(handleEditUserInfo)}
+				isInfoTipShown={isInfoTipShown}
+				formErrorMessage={formErrorMessage}
 			>
 				<div className="profile-form__inputs-block">
 					<div className="profile-form__input">
