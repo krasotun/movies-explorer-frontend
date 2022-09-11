@@ -1,10 +1,12 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 
-function SearchSection() {
+function SearchSection({ onSubmit }) {
 	return (
 		<section className="search">
-			<SearchForm />
+			<SearchForm
+				onSubmit={onSubmit}
+			/>
 		</section>
 	);
 }

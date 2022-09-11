@@ -2,12 +2,16 @@ import React from 'react';
 import SearchSection from '../SearchSection/SearchSection';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function Movies() {
+function Movies({ isLoading, onSubmit, moviesList }) {
 	return (
 		<>
-			<SearchSection />
+			<SearchSection
+				onSubmit={onSubmit}
+			/>
 			<MoviesCardList
 				moreButtonShown
+				moviesList={moviesList}
+				isLoading={isLoading}
 			/>
 		</>
 	);

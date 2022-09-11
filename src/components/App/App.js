@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { auth } from '../../utils/Auth';
 import { userInfo } from '../../utils/UserInfo';
+import { movies } from '../../utils/Movies';
 import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
 import Footer from '../Footer/Footer';
@@ -25,6 +26,10 @@ function App() {
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	const [formErrorMessage, setFormErrorMessage] = React.useState('');
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+	// eslint-disable-next-line no-unused-vars
+	const [isLoading, setIsLoading] = React.useState(false);
+	// eslint-disable-next-line no-unused-vars
+	const [moviesArray, setMoviesArray] = React.useState([]);
 
 	const noHeaderShown = [
 		'/signin',
@@ -38,6 +43,23 @@ function App() {
 		'/profile',
 		'/404',
 	];
+	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
+		.includes(symbols.toLowerCase());
+
+	const handleMoviesSearch = (seacrh) => {
+		setIsLoading(true);
+		setMoviesArray([]);
+		const search = seacrh;
+		movies.getMovies()
+			.then((res) => {
+				const filtered = res.filter((movie) => filterBySymbols(movie, search));
+				setMoviesArray(filtered);
+				setIsLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	const toggleMenuShown = () => {
 		if (isMenuShown) {
@@ -121,8 +143,11 @@ function App() {
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
+						isLoading={isLoading}
+						onSubmit={handleMoviesSearch}
 						path="/movies"
 						component={Movies}
+						moviesList={moviesArray}
 					/>
 					<Route path="/signin">
 						<Login
