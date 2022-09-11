@@ -4,7 +4,9 @@ import { ErrorMessage } from '@hookform/error-message';
 import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 import Sign from '../Sign/Sign';
 
-function Profile({ isInfoTipShown, onEditUserInfo, formErrorMessage }) {
+function Profile({
+	isInfoTipShown, onEditUserInfo, formErrorMessage, signOut,
+}) {
 	const currentUser = React.useContext(CurrentUserContext);
 	const [name, setName] = React.useState('');
 	const [email, setEmail] = React.useState('');
@@ -57,6 +59,7 @@ function Profile({ isInfoTipShown, onEditUserInfo, formErrorMessage }) {
 				onSubmit={handleSubmit(handleEditUserInfo)}
 				isInfoTipShown={isInfoTipShown}
 				formErrorMessage={formErrorMessage}
+				signOut={signOut}
 			>
 				<div className="profile-form__inputs-block">
 					<div className="profile-form__input">

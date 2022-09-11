@@ -20,7 +20,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
 	const history = useHistory();
-	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+	const [isLoggedIn, setIsLoggedIn] = React.useState(null);
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	const [formErrorMessage, setFormErrorMessage] = React.useState('');
@@ -46,73 +46,64 @@ function App() {
 	};
 
 	const handleEditUserInfo = (name, email) => {
-		console.log('onEditUserInfo');
 		userInfo.setUserInfo(name, email)
 			.then((res) => {
 				setCurrentUser(res);
 			})
-			.catch((err) => {
-				console.log('Попали', err);
+			.catch(() => {
 				setInfoTipShown(true);
 				setFormErrorMessage('Ошибка при редактировании');
 			});
 	};
 
-	const handleRegistration = (name, email, password) => {
-		auth.registration(name, email, password)
-			.then((res) => {
-				console.log(res);
-				// setInfoTipShown(true);
-			})
-			.catch(() => {
-				setInfoTipShown(true);
-				setFormErrorMessage('Ошибка при регистрации');
-			});
-	};
-	const handleTokenCheck = React.useCallback(() => {
-		const token = localStorage.getItem('jwt');
-		auth.checkTokenValidity(token)
-			.then(() => {
-				setIsLoggedIn(true);
-				history.push('/movies');
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [history]);
-
-	React.useEffect(() => {
+	const handleTokenCheck = () => {
 		const token = localStorage.getItem('jwt');
 		if (token) {
-			handleTokenCheck();
-		}
-	}, [handleTokenCheck]);
-
-	const handleLogin = (email, password) => {
-		auth.authorization(email, password)
-			.then((res) => {
-				setIsLoggedIn(true);
-				localStorage.setItem('jwt', res.token);
-				history.push('/movies');
-				handleTokenCheck();
-			})
-			.catch(() => {
-				setInfoTipShown(true);
-				setFormErrorMessage('Ошибка при авторизации');
-			});
-	};
-
-	React.useEffect(() => {
-		if (isLoggedIn) {
-			userInfo.getUserInfo()
+			auth.checkTokenValidity(token)
 				.then((res) => {
+					setIsLoggedIn(true);
 					setCurrentUser(res);
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
+	};
+	const handleLogin = (email, password) => {
+		auth.authorization(email, password)
+			.then((res) => {
+				localStorage.setItem('jwt', res.token);
+				history.push('/movies');
+				handleTokenCheck();
+			})
+			.catch((err) => {
+				console.log('Login', err);
+				setInfoTipShown(true);
+				setFormErrorMessage('Ошибка при авторизации');
+			});
+	};
+	const handleRegistration = (name, email, password) => {
+		auth.registration(name, email, password)
+			.then(() => {
+				handleLogin(email, password);
+			})
+			.catch(() => {
+				setInfoTipShown(true);
+				setFormErrorMessage('Ошибка при регистрации');
+			});
+	};
+	const handleSignOut = (evt) => {
+		evt.preventDefault();
+		setIsLoggedIn(false);
+		localStorage.clear();
+		setCurrentUser({});
+		history.push('/');
+	};
+
+	React.useEffect(() => {
+		handleTokenCheck();
 	}, [isLoggedIn]);
+
 	return (
 		<div className="app">
 			<CurrentUserContext.Provider value={currentUser}>
@@ -154,6 +145,7 @@ function App() {
 						onEditUserInfo={handleEditUserInfo}
 						isInfoTipShown={isInfoTipShown}
 						formErrorMessage={formErrorMessage}
+						signOut={handleSignOut}
 					/>
 					<Route path="/404">
 						<NotFoundPage />

@@ -6,7 +6,7 @@ import InfoTip from '../InfoTip/InfoTip';
 
 function Sign({
 	title, children, buttonText, questionTitle, bottomLink,
-	bottomLinkText, formType, onSubmit, isInfoTipShown, buttonDisabled, formErrorMessage,
+	bottomLinkText, formType, onSubmit, isInfoTipShown, buttonDisabled, formErrorMessage, signOut,
 }) {
 	return (
 		<form className={`form ${formType}-form`} onSubmit={onSubmit}>
@@ -38,7 +38,7 @@ function Sign({
 
 				{formType === 'profile'
 					&& (
-						<Link to={bottomLink} className="profile__link">{bottomLinkText}</Link>
+						<Link onClick={signOut} to={bottomLink} className="profile__link">{bottomLinkText}</Link>
 					)}
 			</div>
 		</form>
