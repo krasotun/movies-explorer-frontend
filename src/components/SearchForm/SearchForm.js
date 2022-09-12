@@ -1,32 +1,47 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import SearchButton from '../SearchButton/SearchButton';
+import SearchButtonDisabled from '../SearchButtonDisabled/SearchButtonDisabled';
 
-function SearchForm({ onSubmit, isChecked }) {
+function SearchForm({ onSubmit }) {
 	const [search, setSearch] = React.useState('');
-
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isValid },
+	} = useForm({ mode: 'onChange' });
 	function handleSearchChange(event) {
 		setSearch(event.target.value);
 	}
-
-	const handleSearchFormSubmit = (event) => {
-		event.preventDefault();
-		onSubmit(search, isChecked);
+	const handleSearchFormSubmit = () => {
+		onSubmit(search);
 	};
 	return (
-		<form noValidate onSubmit={handleSearchFormSubmit} className="form search-form">
+		<form noValidate onSubmit={handleSubmit(handleSearchFormSubmit)} className="form search-form">
 			<input
-				required
-				type="text"
+				{...register('search', {
+					required: 'Обязательное поле',
+					onChange: (e) => handleSearchChange(e),
+				})}
 				className="search-form__text-input"
-				placeholder="Фильм"
+				type="text"
 				name="search"
 				value={search || ''}
-				onChange={handleSearchChange}
 			/>
-			<button className="button search-form__submit-button" type="submit">
-				<SearchButton />
+			<button disabled={!isValid} className="button search-form__submit-button" type="submit">
+				{isValid
+					? <SearchButton />
+					: <SearchButtonDisabled />}
 			</button>
+			<span className="search-form__error">
+				<ErrorMessage
+					errors={errors}
+					name="search"
+					render={({ message }) => <p className="search-form__error-text">{message}</p>}
+				/>
+			</span>
 			<div className="search-form__content">
 				<FilterCheckbox
 					className="search-form__check-box"

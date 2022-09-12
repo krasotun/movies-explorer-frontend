@@ -26,9 +26,7 @@ function App() {
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	const [formErrorMessage, setFormErrorMessage] = React.useState('');
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
-	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = React.useState(false);
-	// eslint-disable-next-line no-unused-vars
 	const [moviesArray, setMoviesArray] = React.useState([]);
 
 	const noHeaderShown = [
@@ -46,14 +44,14 @@ function App() {
 	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
 		.includes(symbols.toLowerCase());
 
-	const handleMoviesSearch = (seacrh) => {
+	const handleMoviesSearch = (search) => {
 		setIsLoading(true);
 		setMoviesArray([]);
-		const search = seacrh;
 		movies.getMovies()
 			.then((res) => {
 				const filtered = res.filter((movie) => filterBySymbols(movie, search));
 				setMoviesArray(filtered);
+				localStorage.setItem('foundedMovies', JSON.stringify(filtered));
 				setIsLoading(false);
 			})
 			.catch((err) => {
@@ -124,8 +122,11 @@ function App() {
 
 	React.useEffect(() => {
 		handleTokenCheck();
+		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		if (foundedMovies) {
+			setMoviesArray(foundedMovies);
+		}
 	}, [isLoggedIn]);
-
 	return (
 		<div className="app">
 			<CurrentUserContext.Provider value={currentUser}>
