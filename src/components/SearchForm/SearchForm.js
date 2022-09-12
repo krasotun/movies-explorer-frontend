@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import SearchButton from '../SearchButton/SearchButton';
 import SearchButtonDisabled from '../SearchButtonDisabled/SearchButtonDisabled';
 
-function SearchForm({ onSubmit }) {
+function SearchForm({ onSubmit, toggleIsShortFilmsShown, isShortFilmsShown }) {
 	const [search, setSearch] = React.useState('');
 	const {
 		register,
@@ -45,6 +45,8 @@ function SearchForm({ onSubmit }) {
 			<div className="search-form__content">
 				<FilterCheckbox
 					className="search-form__check-box"
+					toggleIsShortFilmsShown={toggleIsShortFilmsShown}
+					isShortFilmsShown={isShortFilmsShown}
 				/>
 				<p className="search-form__text">Короткометражки</p>
 			</div>

@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React from 'react';
 import FilterActiveCheckbox from '../FilterActiveCheckbox/FilterActiveCheckbox';
 import FilterInactiveCheckbox from '../FilterInactiveCheckbox/FilterInactiveCheckbox';
 
-function FilterCheckbox({ className }) {
-	const [isChecked, setIsChecked] = useState(false);
+function FilterCheckbox({ className, toggleIsShortFilmsShown, isShortFilmsShown }) {
 	return (
 		<label className={className}>
 			<input
 				type="checkbox"
 				onChange={() => {
-					setIsChecked(!isChecked);
+					// setIsChecked(!isChecked);
+					toggleIsShortFilmsShown();
 				}}
 			/>
-			{isChecked ? <FilterActiveCheckbox /> : <FilterInactiveCheckbox />}
+			{isShortFilmsShown ? <FilterActiveCheckbox /> : <FilterInactiveCheckbox />}
 		</label>
 	);
 }

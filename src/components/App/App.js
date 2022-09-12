@@ -28,6 +28,7 @@ function App() {
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
+	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 
 	const noHeaderShown = [
 		'/signin',
@@ -41,6 +42,13 @@ function App() {
 		'/profile',
 		'/404',
 	];
+	const toggleIsShortFilmsShown = () => {
+		console.log(isShortFilmsShown);
+		if (isShortFilmsShown) {
+			setIsShortFilmsShown(false);
+		} else setIsShortFilmsShown(true);
+	};
+
 	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
 		.includes(symbols.toLowerCase());
 
@@ -119,6 +127,16 @@ function App() {
 		setCurrentUser({});
 		history.push('/');
 	};
+	React.useEffect(() => {
+		console.log(isShortFilmsShown);
+		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		if (isShortFilmsShown) {
+			console.log('Отфильтровано', filteredMovies);
+			setMoviesArray(filteredMovies);
+			// localStorage.setItem('foundedMovies', JSON.stringify(filteredMovies));
+		}
+	}, [isShortFilmsShown]);
 
 	React.useEffect(() => {
 		handleTokenCheck();
@@ -127,6 +145,7 @@ function App() {
 			setMoviesArray(foundedMovies);
 		}
 	}, [isLoggedIn]);
+
 	return (
 		<div className="app">
 			<CurrentUserContext.Provider value={currentUser}>
@@ -149,6 +168,8 @@ function App() {
 						path="/movies"
 						component={Movies}
 						moviesList={moviesArray}
+						toggleIsShortFilmsShown={toggleIsShortFilmsShown}
+						isShortFilmsShown={isShortFilmsShown}
 					/>
 					<Route path="/signin">
 						<Login
