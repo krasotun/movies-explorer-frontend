@@ -44,8 +44,15 @@ function App() {
 	];
 	const toggleIsShortFilmsShown = () => {
 		console.log(isShortFilmsShown);
-		if (isShortFilmsShown) {
-			setIsShortFilmsShown(false);
+		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		console.log('Массив фильмов до', moviesArray);
+		if (!isShortFilmsShown) {
+			console.log('Отфильтровано', filteredMovies);
+			setMoviesArray(filteredMovies);
+			console.log('Массив фильмов после', moviesArray);
+			// localStorage.setItem('foundedMovies', JSON.stringify(filteredMovies));
+			setIsShortFilmsShown(true);
 		} else setIsShortFilmsShown(true);
 	};
 
@@ -127,16 +134,16 @@ function App() {
 		setCurrentUser({});
 		history.push('/');
 	};
-	React.useEffect(() => {
-		console.log(isShortFilmsShown);
-		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
-		if (isShortFilmsShown) {
-			console.log('Отфильтровано', filteredMovies);
-			setMoviesArray(filteredMovies);
-			// localStorage.setItem('foundedMovies', JSON.stringify(filteredMovies));
-		}
-	}, [isShortFilmsShown]);
+	// React.useEffect(() => {
+	// 	console.log(isShortFilmsShown);
+	// 	const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+	// 	const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+	// 	if (isShortFilmsShown) {
+	// 		console.log('Отфильтровано', filteredMovies);
+	// 		setMoviesArray(filteredMovies);
+	// 		// localStorage.setItem('foundedMovies', JSON.stringify(filteredMovies));
+	// 	}
+	// }, [isShortFilmsShown]);
 
 	React.useEffect(() => {
 		handleTokenCheck();

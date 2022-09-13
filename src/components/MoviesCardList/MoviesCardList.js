@@ -10,18 +10,20 @@ function MoviesCardList({ moreButtonShown, isLoading, moviesList }) {
 			<div className="movies__cards-container">
 				{moviesList.map((item) => <MovieCard data={item} />)}
 			</div>
-			{moreButtonShown
-				? (
-					<div className="movies__button-container">
-						<Button
-							type="more"
-							label="Ещё"
-						/>
-					</div>
-				)
-				: (
-					<div className="movies__divider" />
-				)}
+			{
+				moreButtonShown
+					? (
+						<div className="movies__button-container">
+							<Button
+								type="more"
+								label="Ещё"
+							/>
+						</div>
+					)
+					: (
+						<div className="movies__divider" />
+					)
+			}
 
 		</section>
 	);
