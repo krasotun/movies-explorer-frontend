@@ -40,7 +40,7 @@ function MovieCard({ data }) {
 	});
 
 	return (
-		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
+		<article key={data.id} className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
 			{isOwn && <Button onClick={toggleIsOwn} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
 			{(!isOwn && isHovered) && <Button onClick={toggleIsOwn} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={movieData.trailer} target="_blanc">

@@ -8,7 +8,7 @@ function MoviesCardList({ moreButtonShown, isLoading, moviesList }) {
 		<section className="movies">
 			{isLoading && <Preloader />}
 			<div className="movies__cards-container">
-				{moviesList.map((item) => <MovieCard data={item} />)}
+				{moviesList.map((item) => <MovieCard data={item} key={item.id} />)}
 			</div>
 			{
 				moreButtonShown
