@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function Movies({
 	isLoading, onSubmit,
 	moviesList, toggleIsShortFilmsShown,
-	isShortFilmsShown,
+	isShortFilmsShown, searchRequest,
 }) {
 	return (
 		<>
@@ -13,6 +13,7 @@ function Movies({
 				onSubmit={onSubmit}
 				toggleIsShortFilmsShown={toggleIsShortFilmsShown}
 				isShortFilmsShown={isShortFilmsShown}
+				searchRequest={searchRequest}
 			/>
 			<MoviesCardList
 				moreButtonShown

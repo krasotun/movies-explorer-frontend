@@ -7,9 +7,18 @@ function MoviesCardList({ moreButtonShown, isLoading, moviesList }) {
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
-			<div className="movies__cards-container">
-				{moviesList.map((item) => <MovieCard data={item} key={item.id} />)}
-			</div>
+			{moviesList.length === 0
+				&& (
+					<div div className="movies__error-container">
+						<p className="movies__error-text">Ничего не найдено </p>
+					</div>
+				)}
+			{moviesList.length > 0
+				&& (
+					<div className="movies__cards-container">
+						{moviesList.map((item) => <MovieCard data={item} key={item.id} />)}
+					</div>
+				)}
 			{
 				moreButtonShown
 					? (

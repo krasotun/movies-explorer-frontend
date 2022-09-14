@@ -5,13 +5,17 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import SearchButton from '../SearchButton/SearchButton';
 import SearchButtonDisabled from '../SearchButtonDisabled/SearchButtonDisabled';
 
-function SearchForm({ onSubmit, toggleIsShortFilmsShown, isShortFilmsShown }) {
-	const [search, setSearch] = React.useState('');
+function SearchForm({
+	onSubmit, toggleIsShortFilmsShown, isShortFilmsShown, searchRequest,
+}) {
+	const [search, setSearch] = React.useState(searchRequest);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isValid },
-	} = useForm({ mode: 'onChange' });
+	} = useForm({
+		mode: 'onChange',
+	});
 	function handleSearchChange(event) {
 		setSearch(event.target.value);
 	}
@@ -19,7 +23,7 @@ function SearchForm({ onSubmit, toggleIsShortFilmsShown, isShortFilmsShown }) {
 		onSubmit(search);
 	};
 	return (
-		<form noValidate onSubmit={handleSubmit(handleSearchFormSubmit)} className="form search-form">
+		<form onSubmit={handleSubmit(handleSearchFormSubmit)} className="form search-form">
 			<input
 				{...register('search', {
 					required: 'Нужно ввести ключевое слово',

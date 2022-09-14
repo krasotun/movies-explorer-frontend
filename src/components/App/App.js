@@ -29,6 +29,7 @@ function App() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
+	const [searchRequest, setSearchRequest] = React.useState('');
 
 	const noHeaderShown = [
 		'/signin',
@@ -63,6 +64,8 @@ function App() {
 				const filtered = res.filter((movie) => filterBySymbols(movie, search));
 				setMoviesArray(filtered);
 				localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+				localStorage.setItem('searchRequest', search);
+				setSearchRequest(search);
 				setIsLoading(false);
 			})
 			.catch((err) => {
@@ -152,6 +155,12 @@ function App() {
 	React.useEffect(() => {
 		handleTokenCheck();
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		const savedRequest = localStorage.getItem('searchRequest');
+		if (savedRequest) {
+			setSearchRequest(savedRequest);
+		} else if (!savedRequest) {
+			setSearchRequest('');
+		}
 		let filteredMovies;
 		if (foundedMovies) {
 			filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
@@ -188,6 +197,7 @@ function App() {
 						moviesList={moviesArray}
 						toggleIsShortFilmsShown={toggleIsShortFilmsShown}
 						isShortFilmsShown={isShortFilmsShown}
+						searchRequest={searchRequest}
 					/>
 					<Route path="/signin">
 						<Login
