@@ -3,11 +3,14 @@ import Button from '../Button/Button';
 // import firstImagePath from '../../images/first-movie.png';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
+import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
 function MovieCard({ data }) {
 	const [isOwn, setisOwn] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const currentUser = React.useContext(CurrentUserContext);
 
+	console.log(currentUser._id);
 	const toggleIsOwn = () => {
 		if (isOwn) {
 			setisOwn(false);

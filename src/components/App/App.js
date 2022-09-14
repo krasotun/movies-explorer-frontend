@@ -25,7 +25,7 @@ function App() {
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	const [formErrorMessage, setFormErrorMessage] = React.useState('');
-	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
@@ -92,6 +92,7 @@ function App() {
 		if (token) {
 			auth.checkTokenValidity(token)
 				.then((res) => {
+					console.log(res);
 					setIsLoggedIn(true);
 					setCurrentUser(res);
 				})
@@ -115,7 +116,8 @@ function App() {
 	};
 	const handleRegistration = (name, email, password) => {
 		auth.registration(name, email, password)
-			.then(() => {
+			.then((res) => {
+				console.log(res);
 				handleLogin(email, password);
 			})
 			.catch(() => {
@@ -132,7 +134,10 @@ function App() {
 	};
 	React.useEffect(() => {
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		let filteredMovies;
+		if (foundedMovies) {
+			filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		}
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
 		if (isShortFilmsShown) {
 			setMoviesArray(filteredMovies);
@@ -147,13 +152,16 @@ function App() {
 	React.useEffect(() => {
 		handleTokenCheck();
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		let filteredMovies;
+		if (foundedMovies) {
+			filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+		}
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
 		if (foundedMovies && !shortMoviesChecked) {
 			setMoviesArray(foundedMovies);
 		} else if (shortMoviesChecked) {
 			setMoviesArray(filteredMovies);
-		}
+		} else setMoviesArray([]);
 	}, [isLoggedIn]);
 
 	return (
