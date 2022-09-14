@@ -22,7 +22,7 @@ function SearchForm({ onSubmit, toggleIsShortFilmsShown, isShortFilmsShown }) {
 		<form noValidate onSubmit={handleSubmit(handleSearchFormSubmit)} className="form search-form">
 			<input
 				{...register('search', {
-					required: 'Обязательное поле',
+					required: 'Нужно ввести ключевое слово',
 					onChange: (e) => handleSearchChange(e),
 				})}
 				className="search-form__text-input"
