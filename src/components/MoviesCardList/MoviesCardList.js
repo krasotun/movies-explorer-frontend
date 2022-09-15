@@ -3,7 +3,9 @@ import MovieCard from '../MovieCard/MovieCard';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 
-function MoviesCardList({ moreButtonShown, isLoading, moviesList }) {
+function MoviesCardList({
+	moreButtonShown, isLoading, moviesList, saveMovie,
+}) {
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
@@ -16,7 +18,13 @@ function MoviesCardList({ moreButtonShown, isLoading, moviesList }) {
 			{moviesList.length > 0
 				&& (
 					<div className="movies__cards-container">
-						{moviesList.map((item) => <MovieCard data={item} key={item.id} />)}
+						{moviesList.map((item) => (
+							<MovieCard
+								saveMovie={saveMovie}
+								data={item}
+								key={item.id}
+							/>
+						))}
 					</div>
 				)}
 			{

@@ -4,7 +4,8 @@ import {
 } from 'react-router-dom';
 import { auth } from '../../utils/Auth';
 import { userInfo } from '../../utils/UserInfo';
-import { movies } from '../../utils/Movies';
+import { movies } from '../../utils/MoviesApi';
+import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
 import Footer from '../Footer/Footer';
@@ -28,6 +29,8 @@ function App() {
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
+	// eslint-disable-next-line no-unused-vars
+	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [searchRequest, setSearchRequest] = React.useState('');
 
@@ -43,6 +46,32 @@ function App() {
 		'/profile',
 		'/404',
 	];
+
+	const getSavedMovies = () => {
+		const token = localStorage.getItem('jwt');
+		console.log(token);
+		if (token) {
+			mainApi.getMovies(token)
+				.then((res) => {
+					console.log(res);
+					setSavedMoviesArray(res);
+				})
+				.catch((err) => {
+					console.log('ошибка при загрузке своих фильмов', err);
+				});
+		}
+	};
+	const saveMovie = (data) => {
+		console.log(data);
+		const token = localStorage.getItem('jwt');
+		mainApi.saveMovie(data, token)
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log('Ошибка сохранения фильма', err);
+			});
+	};
 	const toggleIsShortFilmsShown = () => {
 		if (isShortFilmsShown) {
 			setIsShortFilmsShown(false);
@@ -95,7 +124,6 @@ function App() {
 		if (token) {
 			auth.checkTokenValidity(token)
 				.then((res) => {
-					console.log(res);
 					setIsLoggedIn(true);
 					setCurrentUser(res);
 				})
@@ -154,6 +182,7 @@ function App() {
 
 	React.useEffect(() => {
 		handleTokenCheck();
+		getSavedMovies();
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		const savedRequest = localStorage.getItem('searchRequest');
 		if (savedRequest) {
@@ -187,6 +216,7 @@ function App() {
 						isLoggedIn={isLoggedIn}
 						path="/saved-movies"
 						component={SavedMovies}
+						moviesList={savedMoviesArray}
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
@@ -198,6 +228,7 @@ function App() {
 						toggleIsShortFilmsShown={toggleIsShortFilmsShown}
 						isShortFilmsShown={isShortFilmsShown}
 						searchRequest={searchRequest}
+						saveMovie={saveMovie}
 					/>
 					<Route path="/signin">
 						<Login

@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function Movies({
 	isLoading, onSubmit,
 	moviesList, toggleIsShortFilmsShown,
-	isShortFilmsShown, searchRequest,
+	isShortFilmsShown, searchRequest, saveMovie,
 }) {
 	return (
 		<>
@@ -19,6 +19,7 @@ function Movies({
 				moreButtonShown
 				moviesList={moviesList}
 				isLoading={isLoading}
+				saveMovie={saveMovie}
 			/>
 		</>
 	);

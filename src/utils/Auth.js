@@ -45,7 +45,8 @@ class Auth {
 }
 
 export const auth = new Auth({
-	baseUrl: 'https://api.krasotun.nomoredomains.sbs',
+	baseUrl: 'http://localhost:3000',
+	// baseUrl: 'https://api.krasotun.nomoredomains.sbs',
 	headers: {
 		'Content-Type': 'application/json',
 	},
