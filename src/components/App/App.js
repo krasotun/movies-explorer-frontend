@@ -62,7 +62,7 @@ function App() {
 		}
 	};
 	const saveMovie = (data) => {
-		console.log(data);
+		console.log('from main', data);
 		const token = localStorage.getItem('jwt');
 		mainApi.saveMovie(data, token)
 			.then((res) => {

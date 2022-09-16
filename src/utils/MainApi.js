@@ -7,9 +7,8 @@ class MainApi {
 	// eslint-disable-next-line class-methods-use-this
 	_checkServerStatus(res) {
 		if (res.ok) {
-			console.log(res);
 			return res.json();
-		} return console.log(res);
+		} return Promise.reject(new Error(`Ошибка: ${res.status}`));
 	}
 
 	getMovies(token) {
@@ -26,7 +25,7 @@ class MainApi {
 		return fetch(`${this._baseUrl}/movies`, {
 			method: 'POST',
 			headers: {
-				...this.headers,
+				...this._headers,
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -34,8 +33,7 @@ class MainApi {
 	}
 }
 export const mainApi = new MainApi({
-	baseUrl: 'http://localhost:3000',
-	// baseUrl: 'https://api.krasotun.nomoredomains.sbs',
+	baseUrl: 'https://api.krasotun.nomoredomains.sbs',
 	headers: {
 		'Content-Type': 'application/json',
 	},
