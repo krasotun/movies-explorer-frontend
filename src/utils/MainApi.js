@@ -31,6 +31,16 @@ class MainApi {
 			body: JSON.stringify(data),
 		}).then(this.__checkServerStatus);
 	}
+
+	deleteMovie(id, token) {
+		return fetch(`${this._baseUrl}/movies/${id}`, {
+			method: 'DELETE',
+			headers: {
+				...this._headers,
+				Authorization: `Bearer ${token}`,
+			},
+		}).then(this.__checkServerStatus);
+	}
 }
 export const mainApi = new MainApi({
 	baseUrl: 'https://api.krasotun.nomoredomains.sbs',

@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList({
-	moreButtonShown, isLoading, moviesList, saveMovie, savedMoviesList,
+	moreButtonShown, isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
 }) {
 	const getMoviesIds = (array, id) => {
 		const arr = [];
@@ -14,7 +14,17 @@ function MoviesCardList({
 		});
 		return arr.indexOf(id) >= 0;
 	};
+	// eslint-disable-next-line consistent-return
+	const getIdByMovieId = (array, id) => {
+		if (array) {
+			const filtered = array.filter((item) => item.movieId === id);
+			return filtered[0]._id;
+		}
+	};
 	const location = useLocation();
+	const deleteMoviefromSearch = (id) => {
+		deleteMovie(getIdByMovieId(savedMoviesList, id));
+	};
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
@@ -30,6 +40,8 @@ function MoviesCardList({
 						{moviesList.map((item) => (
 							<MovieCard
 								saveMovie={saveMovie}
+								deleteMovie={deleteMovie}
+								deleteMoviefromSearch={deleteMoviefromSearch}
 								data={item}
 								key={item.id}
 								isSaved={location.pathname === '/movies' ? getMoviesIds(savedMoviesList, item.id) : true}

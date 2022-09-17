@@ -63,13 +63,25 @@ function App() {
 	const saveMovie = (data) => {
 		const token = localStorage.getItem('jwt');
 		mainApi.saveMovie(data, token)
-			.then((res) => {
-				console.log(res);
+			.then(() => {
+				getSavedMovies();
 			})
 			.catch((err) => {
 				console.log('Ошибка сохранения фильма', err);
 			});
 	};
+
+	const deleteMovie = (id) => {
+		const token = localStorage.getItem('jwt');
+		mainApi.deleteMovie(id, token)
+			.then(() => {
+				getSavedMovies();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const toggleIsShortFilmsShown = () => {
 		if (isShortFilmsShown) {
 			setIsShortFilmsShown(false);
@@ -137,16 +149,14 @@ function App() {
 				history.push('/movies');
 				handleTokenCheck();
 			})
-			.catch((err) => {
-				console.log('Login', err);
+			.catch(() => {
 				setInfoTipShown(true);
 				setFormErrorMessage('Ошибка при авторизации');
 			});
 	};
 	const handleRegistration = (name, email, password) => {
 		auth.registration(name, email, password)
-			.then((res) => {
-				console.log(res);
+			.then(() => {
 				handleLogin(email, password);
 			})
 			.catch(() => {
@@ -215,6 +225,7 @@ function App() {
 						path="/saved-movies"
 						component={SavedMovies}
 						moviesList={savedMoviesArray}
+						deleteMovie={deleteMovie}
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
@@ -228,6 +239,7 @@ function App() {
 						isShortFilmsShown={isShortFilmsShown}
 						searchRequest={searchRequest}
 						saveMovie={saveMovie}
+						deleteMovie={deleteMovie}
 					/>
 					<Route path="/signin">
 						<Login

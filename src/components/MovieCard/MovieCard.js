@@ -4,11 +4,12 @@ import Button from '../Button/Button';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
 
-function MovieCard({ data, saveMovie, isSaved }) {
+function MovieCard({
+	data, saveMovie, isSaved, deleteMovie, deleteMoviefromSearch,
+}) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [isShown, setIsShown] = useState(isSaved);
 	const location = useLocation();
-
 	const toggleIsShown = () => {
 		if (isShown) {
 			setIsShown(false);
@@ -25,7 +26,6 @@ function MovieCard({ data, saveMovie, isSaved }) {
 	const setHover = () => setIsHovered(true);
 
 	const removeHover = () => setIsHovered(false);
-
 	// eslint-disable-next-line no-unused-vars
 	const [movieData, setMovieData] = React.useState({
 		country: data.country || 'Нет данных',
@@ -41,15 +41,20 @@ function MovieCard({ data, saveMovie, isSaved }) {
 		thumbnail: `${baseUrl}${data.image.url}`,
 	});
 	const toggleSaveMovie = () => {
-		console.log('Clicked');
 		toggleIsShown();
 		saveMovie(movieData);
 	};
-
+	const toggleDeleteMovie = () => {
+		deleteMovie(data._id);
+	};
+	const toggleDeleteMoviefromSearch = () => {
+		deleteMoviefromSearch(movieData.movieId);
+		toggleIsShown();
+	};
 
 	return (
-		<article key={data.id} className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{(isSaved || isShown) && <Button type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
+		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
+			{(isShown) && <Button onClick={location.pathname === '/saved-movies' ? toggleDeleteMovie : toggleDeleteMoviefromSearch} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
 			{(!isShown && isHovered) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
