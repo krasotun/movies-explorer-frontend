@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
-// import { CurrentUserContext } from '../../contexts/CurrenUserContext';
+import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
 function MovieCard({ data, saveMovie }) {
 	const [isOwn, setisOwn] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
-	// const currentUser = React.useContext(CurrentUserContext);
+	const currentUser = React.useContext(CurrentUserContext);
 	const location = useLocation();
 
 	const toggleIsOwn = () => {
