@@ -1,11 +1,20 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import MovieCard from '../MovieCard/MovieCard';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList({
-	moreButtonShown, isLoading, moviesList, saveMovie,
+	moreButtonShown, isLoading, moviesList, saveMovie, savedMoviesList,
 }) {
+	const getMoviesIds = (array, id) => {
+		const arr = [];
+		array.forEach((item) => {
+			arr.push(item.movieId);
+		});
+		return arr.indexOf(id) >= 0;
+	};
+	const location = useLocation();
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
@@ -23,6 +32,7 @@ function MoviesCardList({
 								saveMovie={saveMovie}
 								data={item}
 								key={item.id}
+								isSaved={location.pathname === '/movies' ? getMoviesIds(savedMoviesList, item.id) : true}
 							/>
 						))}
 					</div>

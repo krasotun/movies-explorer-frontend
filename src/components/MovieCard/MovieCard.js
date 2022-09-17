@@ -3,20 +3,19 @@ import { useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
-import { CurrentUserContext } from '../../contexts/CurrenUserContext';
 
-function MovieCard({ data, saveMovie }) {
-	const [isOwn, setisOwn] = useState(false);
+function MovieCard({ data, saveMovie, isSaved }) {
 	const [isHovered, setIsHovered] = useState(false);
-	const currentUser = React.useContext(CurrentUserContext);
+	const [isShown, setIsShown] = useState(isSaved);
 	const location = useLocation();
 
-	const toggleIsOwn = () => {
-		if (isOwn) {
-			setisOwn(false);
-		} else setisOwn(true);
+	const toggleIsShown = () => {
+		if (isShown) {
+			setIsShown(false);
+		} else if (!isShown) {
+			setIsShown(true);
+		}
 	};
-
 	const timeConverter = (duration) => {
 		const hours = Math.floor(duration / 60);
 		const minutes = Math.floor(duration % 60);
@@ -42,13 +41,16 @@ function MovieCard({ data, saveMovie }) {
 		thumbnail: `${baseUrl}${data.image.url}`,
 	});
 	const toggleSaveMovie = () => {
+		console.log('Clicked');
+		toggleIsShown();
 		saveMovie(movieData);
 	};
 
+
 	return (
 		<article key={data.id} className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{isOwn && <Button onClick={toggleIsOwn} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
-			{(!isOwn && isHovered) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
+			{(isSaved || isShown) && <Button type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
+			{(!isShown && isHovered) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
 			</a>

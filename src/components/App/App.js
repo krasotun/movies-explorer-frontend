@@ -49,11 +49,9 @@ function App() {
 
 	const getSavedMovies = () => {
 		const token = localStorage.getItem('jwt');
-		console.log(token);
 		if (token) {
 			mainApi.getMovies(token)
 				.then((res) => {
-					console.log(res);
 					setSavedMoviesArray(res);
 				})
 				.catch((err) => {
@@ -61,8 +59,8 @@ function App() {
 				});
 		}
 	};
+
 	const saveMovie = (data) => {
-		console.log('from main', data);
 		const token = localStorage.getItem('jwt');
 		mainApi.saveMovie(data, token)
 			.then((res) => {
@@ -224,6 +222,7 @@ function App() {
 						onSubmit={handleMoviesSearch}
 						path="/movies"
 						component={Movies}
+						savedMoviesList={savedMoviesArray}
 						moviesList={moviesArray}
 						toggleIsShortFilmsShown={toggleIsShortFilmsShown}
 						isShortFilmsShown={isShortFilmsShown}
