@@ -29,10 +29,11 @@ function App() {
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
-	// eslint-disable-next-line no-unused-vars
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
+	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
 	const [searchRequest, setSearchRequest] = React.useState('');
+	const [searchSavedRequest, setSearchSavedRequest] = React.useState('');
 
 	const noHeaderShown = [
 		'/signin',
@@ -82,6 +83,15 @@ function App() {
 			});
 	};
 
+	const toggleIsSavedShortFilmsShown = () => {
+		if (isSavedShortFilmsShown) {
+			setIsSavedShortFilmsShown(false);
+			localStorage.removeItem('savedShortMoviesChecked');
+		} else {
+			setIsSavedShortFilmsShown(true);
+			localStorage.setItem('savedShortMoviesChecked', 'true');
+		}
+	};
 	const toggleIsShortFilmsShown = () => {
 		if (isShortFilmsShown) {
 			setIsShortFilmsShown(false);
@@ -112,6 +122,22 @@ function App() {
 			});
 	};
 
+	const handleSavedMoviesSearch = (search) => {
+		const token = localStorage.getItem('jwt');
+		setIsLoading(true);
+		mainApi.getMovies(token)
+			.then((res) => {
+				const filtered = res.filter((movie) => filterBySymbols(movie, search));
+				localStorage.setItem('savedFoundedMovies', JSON.stringify(filtered));
+				localStorage.setItem('savedSearchRequest', search);
+				setSavedMoviesArray(filtered);
+				setSearchSavedRequest(search);
+				setIsLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	const toggleMenuShown = () => {
 		if (isMenuShown) {
 			setIsMenuShown(false);
@@ -188,21 +214,34 @@ function App() {
 		}
 	}, [isShortFilmsShown]);
 
+	// React.useEffect(() => {
+
+	// }, [isSavedShortFilmsShown]);
+
 	React.useEffect(() => {
 		handleTokenCheck();
-		getSavedMovies();
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		const savedRequest = localStorage.getItem('searchRequest');
+		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
+		const savedSearchRequest = localStorage.getItem('savedSearchRequest');
+		const savedFoundedMovies = JSON.parse(localStorage.getItem('savedFoundedMovies'));
 		if (savedRequest) {
 			setSearchRequest(savedRequest);
 		} else if (!savedRequest) {
 			setSearchRequest('');
 		}
+		if (savedSearchRequest) {
+			setSearchSavedRequest(savedSearchRequest);
+		} else if (!savedSearchRequest) {
+			setSearchSavedRequest('');
+		}
 		let filteredMovies;
 		if (foundedMovies) {
 			filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
 		}
-		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
+		if (savedFoundedMovies) {
+			setSavedMoviesArray(savedFoundedMovies);
+		} else getSavedMovies();
 		if (foundedMovies && !shortMoviesChecked) {
 			setMoviesArray(foundedMovies);
 		} else if (shortMoviesChecked) {
@@ -224,8 +263,12 @@ function App() {
 						isLoggedIn={isLoggedIn}
 						path="/saved-movies"
 						component={SavedMovies}
+						toggleIsShortFilmsShown={toggleIsSavedShortFilmsShown}
+						isShortFilmsShown={isSavedShortFilmsShown}
+						searchRequest={searchSavedRequest}
 						moviesList={savedMoviesArray}
 						deleteMovie={deleteMovie}
+						onSubmit={handleSavedMoviesSearch}
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
