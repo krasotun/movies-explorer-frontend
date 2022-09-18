@@ -231,16 +231,16 @@ function App() {
 
 	React.useEffect(() => {
 		handleTokenCheck();
+
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const savedRequest = localStorage.getItem('searchRequest');
+		const seachRequest = localStorage.getItem('searchRequest');
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
-		// const savedSearchRequest = localStorage.getItem('savedSearchRequest');
-		// const savedFoundedMovies = JSON.parse(localStorage.getItem('savedFoundedMovies'));
+
 		if (foundedMovies) {
 			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
-			if (savedRequest) {
-				setSearchRequest(savedRequest);
-			} else if (!savedRequest) {
+			if (seachRequest) {
+				setSearchRequest(seachRequest);
+			} else if (!seachRequest) {
 				setSearchRequest('');
 			}
 			if (!shortMoviesChecked) {
@@ -249,6 +249,24 @@ function App() {
 				setMoviesArray(filteredMovies);
 			}
 		} else setMoviesArray([]);
+
+		const savedFoundedMovies = JSON.parse(localStorage.getItem('savedFoundedMovies'));
+		const savedSearchRequest = localStorage.getItem('savedSearchRequest');
+		const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
+
+		if (savedFoundedMovies) {
+			const savedFilteredMovies = savedFoundedMovies.filter((movie) => movie.duration <= 40);
+			if (savedSearchRequest) {
+				setSearchSavedRequest(savedSearchRequest);
+			} else if (!savedSearchRequest) {
+				setSearchSavedRequest('');
+			}
+			if (!savedShortMoviesChecked) {
+				setSavedMoviesArray(savedFoundedMovies);
+			} else if (savedShortMoviesChecked) {
+				setSavedMoviesArray(savedFilteredMovies);
+			}
+		} else getSavedMovies();
 	}, [isLoggedIn]);
 
 	return (
