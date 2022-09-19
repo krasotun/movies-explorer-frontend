@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import MovieCard from '../MovieCard/MovieCard';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
+import useScreenSize from '../../utils/ScreenSize';
 
 function MoviesCardList({
 	moreButtonShown, isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
@@ -25,6 +26,9 @@ function MoviesCardList({
 	const deleteMoviefromSearch = (id) => {
 		deleteMovie(getIdByMovieId(savedMoviesList, id));
 	};
+
+	const screenSize = useScreenSize();
+	console.log(screenSize);
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
@@ -43,7 +47,7 @@ function MoviesCardList({
 								deleteMovie={deleteMovie}
 								deleteMoviefromSearch={deleteMoviefromSearch}
 								data={item}
-								key={item.id}
+								key={item._id}
 								isSaved={location.pathname === '/movies' ? getMoviesIds(savedMoviesList, item.id) : true}
 							/>
 						))}
