@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function Movies({
 	isLoading, onSubmit,
 	moviesList, toggleIsShortFilmsShown,
-	isShortFilmsShown, searchRequest, saveMovie, savedMoviesList, deleteMovie,
+	isShortFilmsShown, searchRequest, saveMovie, savedMoviesList, deleteMovie, isNotFound,
 }) {
 	return (
 		<>
@@ -21,6 +21,7 @@ function Movies({
 				isLoading={isLoading}
 				saveMovie={saveMovie}
 				deleteMovie={deleteMovie}
+				isNotFound={isNotFound}
 			/>
 		</>
 	);

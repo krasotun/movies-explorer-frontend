@@ -23,6 +23,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 function App() {
 	const history = useHistory();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(null);
+	const [isNotFound, setIsNotFound] = React.useState(false);
 	const [isMenuShown, setIsMenuShown] = React.useState(false);
 	const [isInfoTipShown, setInfoTipShown] = React.useState(false);
 	const [formErrorMessage, setFormErrorMessage] = React.useState('');
@@ -106,11 +107,15 @@ function App() {
 		.includes(symbols.toLowerCase());
 
 	const handleMoviesSearch = (search) => {
+		setIsNotFound(false);
 		setIsLoading(true);
 		setMoviesArray([]);
 		movies.getMovies()
 			.then((res) => {
 				const filtered = res.filter((movie) => filterBySymbols(movie, search));
+				if (filtered.length === 0) {
+					setIsNotFound(true);
+				}
 				setMoviesArray(filtered);
 				localStorage.setItem('foundedMovies', JSON.stringify(filtered));
 				localStorage.setItem('searchRequest', search);
@@ -162,6 +167,7 @@ function App() {
 				.then((res) => {
 					setIsLoggedIn(true);
 					setCurrentUser(res);
+					history.push('/movies');
 				})
 				.catch((err) => {
 					console.log(err);
@@ -172,8 +178,8 @@ function App() {
 		auth.authorization(email, password)
 			.then((res) => {
 				localStorage.setItem('jwt', res.token);
-				history.push('/movies');
 				handleTokenCheck();
+				history.push('/movies');
 			})
 			.catch(() => {
 				setInfoTipShown(true);
@@ -267,6 +273,7 @@ function App() {
 				setSavedMoviesArray(savedFilteredMovies);
 			}
 		} else getSavedMovies();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 
 	return (
@@ -303,6 +310,7 @@ function App() {
 						searchRequest={searchRequest}
 						saveMovie={saveMovie}
 						deleteMovie={deleteMovie}
+						isNotFound={isNotFound}
 					/>
 					<Route path="/signin">
 						<Login

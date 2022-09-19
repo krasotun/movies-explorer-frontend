@@ -6,7 +6,7 @@ import Preloader from '../Preloader/Preloader';
 import useScreenSize from '../../utils/ScreenSize';
 
 function MoviesCardList({
-	isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
+	isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie, isNotFound,
 }) {
 	// eslint-disable-next-line no-unused-vars
 	const [renderedMoviesArray, setRenderedMoviesArray] = React.useState([]);
@@ -84,7 +84,7 @@ function MoviesCardList({
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
-			{moviesList.length === 0
+			{isNotFound
 				&& (
 					<div div className="movies__error-container">
 						<p className="movies__error-text">Ничего не найдено </p>
