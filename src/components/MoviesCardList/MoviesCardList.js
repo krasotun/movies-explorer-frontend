@@ -47,7 +47,7 @@ function MoviesCardList({
 								deleteMovie={deleteMovie}
 								deleteMoviefromSearch={deleteMoviefromSearch}
 								data={item}
-								key={item._id}
+								key={item.id || item._id}
 								isSaved={location.pathname === '/movies' ? getMoviesIds(savedMoviesList, item.id) : true}
 							/>
 						))}
