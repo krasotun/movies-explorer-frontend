@@ -9,7 +9,59 @@ function MoviesCardList({
 	isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
 }) {
 	// eslint-disable-next-line no-unused-vars
+	const [renderedMoviesArray, setRenderedMoviesArray] = React.useState([]);
 	const [moreButtonShown, setMoreButtonShown] = React.useState(false);
+	const [moviesToRender, setMoviesToRender] = React.useState(0);
+	const [moviesToAdd, setMoviesToAdd] = React.useState(0);
+	const screenSize = useScreenSize();
+	const location = useLocation();
+
+	const screenSizeToRender = {
+		large: 1024,
+		medium: 768,
+		small: 320,
+	};
+
+	const countRenderedMovies = () => {
+		if (screenSize.width >= screenSizeToRender.large) {
+			setMoviesToRender(12);
+			setMoviesToAdd(3);
+		} else if (screenSize.width < screenSizeToRender.large
+			&& screenSize.width >= screenSizeToRender.medium) {
+			setMoviesToRender(8);
+			setMoviesToAdd(2);
+		} else if (screenSize.width < screenSizeToRender.medium
+			&& screenSize.width >= screenSizeToRender.small) {
+			setMoviesToRender(5);
+			setMoviesToAdd(2);
+		}
+	};
+	React.useEffect(() => {
+		countRenderedMovies();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [screenSize.width]);
+
+	React.useEffect(() => {
+		if (location.pathname === '/movies') {
+			setRenderedMoviesArray(moviesList.slice(0, moviesToRender));
+			if (moviesList.length <= moviesToRender) {
+				setMoreButtonShown(false);
+			} else {
+				setMoreButtonShown(true);
+			}
+		} else if (location.pathname === '/saved-movies') {
+			setRenderedMoviesArray(moviesList);
+			setMoreButtonShown(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [moviesList, moviesToRender]);
+
+	const handleShowMoreButtonClick = () => {
+		setRenderedMoviesArray(moviesList.slice(0, renderedMoviesArray.length + moviesToAdd));
+		if (renderedMoviesArray.length >= moviesList.length - moviesToAdd) {
+			setMoreButtonShown(false);
+		}
+	};
 
 	const getMoviesIds = (array, id) => {
 		const arr = [];
@@ -25,13 +77,10 @@ function MoviesCardList({
 			return filtered[0]._id;
 		}
 	};
-	const location = useLocation();
+
 	const deleteMoviefromSearch = (id) => {
 		deleteMovie(getIdByMovieId(savedMoviesList, id));
 	};
-
-	const screenSize = useScreenSize();
-	console.log(screenSize);
 	return (
 		<section className="movies">
 			{isLoading && <Preloader />}
@@ -44,7 +93,7 @@ function MoviesCardList({
 			{moviesList.length > 0
 				&& (
 					<div className="movies__cards-container">
-						{moviesList.map((item) => (
+						{renderedMoviesArray.map((item) => (
 							<MovieCard
 								saveMovie={saveMovie}
 								deleteMovie={deleteMovie}
@@ -60,6 +109,7 @@ function MoviesCardList({
 				&& (
 					<div className="movies__button-container">
 						<Button
+							onClick={handleShowMoreButtonClick}
 							type="more"
 							label="Ещё"
 						/>
