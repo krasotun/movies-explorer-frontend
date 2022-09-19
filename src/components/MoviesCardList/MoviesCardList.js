@@ -6,8 +6,11 @@ import Preloader from '../Preloader/Preloader';
 import useScreenSize from '../../utils/ScreenSize';
 
 function MoviesCardList({
-	moreButtonShown, isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
+	isLoading, moviesList, saveMovie, savedMoviesList, deleteMovie,
 }) {
+	// eslint-disable-next-line no-unused-vars
+	const [moreButtonShown, setMoreButtonShown] = React.useState(false);
+
 	const getMoviesIds = (array, id) => {
 		const arr = [];
 		array.forEach((item) => {
@@ -53,21 +56,16 @@ function MoviesCardList({
 						))}
 					</div>
 				)}
-			{
-				moreButtonShown
-					? (
-						<div className="movies__button-container">
-							<Button
-								type="more"
-								label="Ещё"
-							/>
-						</div>
-					)
-					: (
-						<div className="movies__divider" />
-					)
-			}
-
+			{(moreButtonShown && location.pathname === '/movies')
+				&& (
+					<div className="movies__button-container">
+						<Button
+							type="more"
+							label="Ещё"
+						/>
+					</div>
+				)}
+			<div className="movies__divider" />
 		</section>
 	);
 }

@@ -21,7 +21,7 @@ function Portfolio() {
 	];
 	const portfolioContent = portfolioData.map((item) => (
 		<a className="portfolio__link" target="_blanc" href={item.link}>
-			<li className="portfolio__item" key={item.id}>
+			<li key={item.id} className="portfolio__item">
 				<p className="portfolio__text">
 					{item.title}
 				</p>

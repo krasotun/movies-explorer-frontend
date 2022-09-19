@@ -14,7 +14,6 @@ function SavedMovies({
 				searchRequest={searchRequest}
 			/>
 			<MoviesCardList
-				moreButtonShown={false}
 				moviesList={moviesList}
 				deleteMovie={deleteMovie}
 			/>

@@ -16,7 +16,6 @@ function Movies({
 				searchRequest={searchRequest}
 			/>
 			<MoviesCardList
-				moreButtonShown
 				moviesList={moviesList}
 				savedMoviesList={savedMoviesList}
 				isLoading={isLoading}
