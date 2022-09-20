@@ -167,7 +167,6 @@ function App() {
 				.then((res) => {
 					setIsLoggedIn(true);
 					setCurrentUser(res);
-					history.push('/movies');
 				})
 				.catch((err) => {
 					console.log(err);
