@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import SearchButton from '../SearchButton/SearchButton';
-import SearchButtonDisabled from '../SearchButtonDisabled/SearchButtonDisabled';
 
 function SearchForm({
 	onSubmit, toggleIsShortFilmsShown, isShortFilmsShown, searchRequest,
@@ -12,9 +11,9 @@ function SearchForm({
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid },
+		formState: { errors },
 	} = useForm({
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 	function handleSearchChange(event) {
 		setSearch(event.target.value);
@@ -34,10 +33,8 @@ function SearchForm({
 				name="search"
 				value={search || ''}
 			/>
-			<button disabled={!isValid} className="button search-form__submit-button" type="submit">
-				{isValid
-					? <SearchButton />
-					: <SearchButtonDisabled />}
+			<button className="button search-form__submit-button" type="submit">
+				<SearchButton />
 			</button>
 			<span className="search-form__error">
 				<ErrorMessage

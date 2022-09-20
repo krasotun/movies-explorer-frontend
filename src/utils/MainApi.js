@@ -29,7 +29,7 @@ class MainApi {
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
-		}).then(this.__checkServerStatus);
+		}).then(this._checkServerStatus);
 	}
 
 	deleteMovie(id, token) {
@@ -39,7 +39,7 @@ class MainApi {
 				...this._headers,
 				Authorization: `Bearer ${token}`,
 			},
-		}).then(this.__checkServerStatus);
+		}).then(this._checkServerStatus);
 	}
 }
 export const mainApi = new MainApi({

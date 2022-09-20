@@ -3,7 +3,8 @@ import SearchSection from '../SearchSection/SearchSection';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({
-	moviesList, deleteMovie, toggleIsShortFilmsShown, isShortFilmsShown, onSubmit, searchRequest,
+	moviesList, deleteMovie, toggleIsShortFilmsShown,
+	isShortFilmsShown, onSubmit, searchRequest, isNotFound,
 }) {
 	return (
 		<>
@@ -16,6 +17,7 @@ function SavedMovies({
 			<MoviesCardList
 				moviesList={moviesList}
 				deleteMovie={deleteMovie}
+				isNotFound={isNotFound}
 			/>
 		</>
 	);

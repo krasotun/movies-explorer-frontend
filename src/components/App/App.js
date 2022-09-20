@@ -34,7 +34,7 @@ function App() {
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
 	const [searchRequest, setSearchRequest] = React.useState('');
-	const [searchSavedRequest, setSearchSavedRequest] = React.useState('');
+	// const [searchSavedRequest, setSearchSavedRequest] = React.useState('');
 
 	const noHeaderShown = [
 		'/signin',
@@ -128,15 +128,16 @@ function App() {
 	};
 
 	const handleSavedMoviesSearch = (search) => {
+		setIsNotFound(false);
 		const token = localStorage.getItem('jwt');
 		setIsLoading(true);
 		mainApi.getMovies(token)
 			.then((res) => {
 				const filtered = res.filter((movie) => filterBySymbols(movie, search));
-				localStorage.setItem('savedFoundedMovies', JSON.stringify(filtered));
-				localStorage.setItem('savedSearchRequest', search);
 				setSavedMoviesArray(filtered);
-				setSearchSavedRequest(search);
+				if (filtered.length === 0) {
+					setIsNotFound(true);
+				}
 				setIsLoading(false);
 			})
 			.catch((err) => {
@@ -200,6 +201,7 @@ function App() {
 		setIsLoggedIn(false);
 		localStorage.clear();
 		setCurrentUser({});
+		setSearchRequest('');
 		history.push('/');
 	};
 	React.useEffect(() => {
@@ -219,24 +221,21 @@ function App() {
 	}, [isShortFilmsShown]);
 
 	React.useEffect(() => {
-		const savedFoundedMovies = JSON.parse(localStorage.getItem('savedFoundedMovies'));
-		if (savedFoundedMovies) {
-			const filteredMovies = savedFoundedMovies.filter((movie) => movie.duration <= 40);
-			const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
-			if (isSavedShortFilmsShown) {
-				setSavedMoviesArray(filteredMovies);
-			} else {
-				setSavedMoviesArray(savedFoundedMovies);
-			}
-			if (savedShortMoviesChecked) {
-				setIsSavedShortFilmsShown(true);
-			}
+		const filteredMovies = savedMoviesArray.filter((movie) => movie.duration <= 40);
+		const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
+		if (isSavedShortFilmsShown) {
+			setSavedMoviesArray(filteredMovies);
+		} else {
+			setSavedMoviesArray(savedMoviesArray);
+		}
+		if (savedShortMoviesChecked) {
+			setIsSavedShortFilmsShown(true);
 		} else getSavedMovies();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isSavedShortFilmsShown]);
 
 	React.useEffect(() => {
 		handleTokenCheck();
-
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		const seachRequest = localStorage.getItem('searchRequest');
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
@@ -254,24 +253,7 @@ function App() {
 				setMoviesArray(filteredMovies);
 			}
 		} else setMoviesArray([]);
-
-		const savedFoundedMovies = JSON.parse(localStorage.getItem('savedFoundedMovies'));
-		const savedSearchRequest = localStorage.getItem('savedSearchRequest');
-		const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
-
-		if (savedFoundedMovies) {
-			const savedFilteredMovies = savedFoundedMovies.filter((movie) => movie.duration <= 40);
-			if (savedSearchRequest) {
-				setSearchSavedRequest(savedSearchRequest);
-			} else if (!savedSearchRequest) {
-				setSearchSavedRequest('');
-			}
-			if (!savedShortMoviesChecked) {
-				setSavedMoviesArray(savedFoundedMovies);
-			} else if (savedShortMoviesChecked) {
-				setSavedMoviesArray(savedFilteredMovies);
-			}
-		} else getSavedMovies();
+		getSavedMovies();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 
@@ -290,11 +272,11 @@ function App() {
 						path="/saved-movies"
 						component={SavedMovies}
 						toggleIsShortFilmsShown={toggleIsSavedShortFilmsShown}
-						isShortFilmsShown={isSavedShortFilmsShown}
-						searchRequest={searchSavedRequest}
 						moviesList={savedMoviesArray}
 						deleteMovie={deleteMovie}
+						isShortFilmsShown={isSavedShortFilmsShown}
 						onSubmit={handleSavedMoviesSearch}
+						isNotFound={isNotFound}
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
