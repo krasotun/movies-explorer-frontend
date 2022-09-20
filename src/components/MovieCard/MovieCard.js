@@ -54,7 +54,8 @@ function MovieCard({
 
 	return (
 		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{(isShown) && <Button onClick={location.pathname === '/saved-movies' ? toggleDeleteMovie : toggleDeleteMoviefromSearch} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
+			{(isShown && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
+			{(location.pathname === '/saved-movies') && <Button onClick={toggleDeleteMovie} type="movie-card_saved" label={isHovered && <MovieRemoveButton />} />}
 			{(!isShown && isHovered) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
