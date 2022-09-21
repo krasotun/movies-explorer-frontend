@@ -30,6 +30,7 @@ function App() {
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
+	const [cachedMoviesArray, setCachedMoviesArray] = React.useState([]);
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
@@ -107,26 +108,39 @@ function App() {
 		.includes(symbols.toLowerCase());
 
 	const handleMoviesSearch = (search) => {
+		console.log('cached', cachedMoviesArray);
 		setIsNotFound(false);
 		setIsLoading(true);
-		setMoviesArray([]);
-		movies.getMovies()
-			.then((res) => {
-				const filtered = res.filter((movie) => filterBySymbols(movie, search));
-				if (filtered.length === 0) {
-					setIsNotFound(true);
-				}
-				setMoviesArray(filtered);
-				localStorage.setItem('foundedMovies', JSON.stringify(filtered));
-				localStorage.setItem('searchRequest', search);
-				setSearchRequest(search);
-				setIsLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// setMoviesArray([]);
+		if (cachedMoviesArray.length === 0) {
+			movies.getMovies()
+				.then((res) => {
+					setCachedMoviesArray(res);
+					const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+					if (filtered.length === 0) {
+						setIsNotFound(true);
+					}
+					setMoviesArray(filtered);
+					localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+					localStorage.setItem('searchRequest', search);
+					setSearchRequest(search);
+					setIsLoading(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			if (filtered.length === 0) {
+				setIsNotFound(true);
+			}
+			setMoviesArray(filtered);
+			localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+			localStorage.setItem('searchRequest', search);
+			setSearchRequest(search);
+			setIsLoading(false);
+		}
 	};
-
 	const handleSavedMoviesSearch = (search) => {
 		setIsNotFound(false);
 		const token = localStorage.getItem('jwt');
@@ -202,6 +216,7 @@ function App() {
 		localStorage.clear();
 		setCurrentUser({});
 		setSearchRequest('');
+		setCachedMoviesArray([]);
 		history.push('/');
 	};
 	React.useEffect(() => {
@@ -239,7 +254,6 @@ function App() {
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		const seachRequest = localStorage.getItem('searchRequest');
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
-
 		if (foundedMovies) {
 			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
 			if (seachRequest) {
