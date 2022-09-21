@@ -35,7 +35,6 @@ function App() {
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
 	const [searchRequest, setSearchRequest] = React.useState('');
-	// const [searchSavedRequest, setSearchSavedRequest] = React.useState('');
 
 	const noHeaderShown = [
 		'/signin',
@@ -108,38 +107,18 @@ function App() {
 		.includes(symbols.toLowerCase());
 
 	const handleMoviesSearch = (search) => {
-		console.log('cached', cachedMoviesArray);
 		setIsNotFound(false);
 		setIsLoading(true);
 		// setMoviesArray([]);
-		if (cachedMoviesArray.length === 0) {
-			movies.getMovies()
-				.then((res) => {
-					setCachedMoviesArray(res);
-					const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
-					if (filtered.length === 0) {
-						setIsNotFound(true);
-					}
-					setMoviesArray(filtered);
-					localStorage.setItem('foundedMovies', JSON.stringify(filtered));
-					localStorage.setItem('searchRequest', search);
-					setSearchRequest(search);
-					setIsLoading(false);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
-			if (filtered.length === 0) {
-				setIsNotFound(true);
-			}
-			setMoviesArray(filtered);
-			localStorage.setItem('foundedMovies', JSON.stringify(filtered));
-			localStorage.setItem('searchRequest', search);
-			setSearchRequest(search);
-			setIsLoading(false);
+		const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+		if (filtered.length === 0) {
+			setIsNotFound(true);
 		}
+		setMoviesArray(filtered);
+		localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+		localStorage.setItem('searchRequest', search);
+		setSearchRequest(search);
+		setIsLoading(false);
 	};
 	const handleSavedMoviesSearch = (search) => {
 		setIsNotFound(false);
@@ -217,6 +196,7 @@ function App() {
 		setCurrentUser({});
 		setSearchRequest('');
 		setCachedMoviesArray([]);
+		setMoviesArray([]);
 		history.push('/');
 	};
 	React.useEffect(() => {
@@ -251,6 +231,13 @@ function App() {
 
 	React.useEffect(() => {
 		handleTokenCheck();
+		movies.getMovies()
+			.then((res) => {
+				setCachedMoviesArray(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		const seachRequest = localStorage.getItem('searchRequest');
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
@@ -270,7 +257,6 @@ function App() {
 		getSavedMovies();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
-
 	return (
 		<div className="app">
 			<CurrentUserContext.Provider value={currentUser}>
