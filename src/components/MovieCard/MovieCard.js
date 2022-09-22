@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
 import getTrailerLink from '../../utils/getTrailerLink';
+import useScreenSize from '../../utils/ScreenSize';
 
 function MovieCard({
 	data, saveMovie, isSaved, deleteMovie, deleteMoviefromSearch,
@@ -18,6 +19,7 @@ function MovieCard({
 			setIsShown(true);
 		}
 	};
+	const screenSize = useScreenSize();
 	const timeConverter = (duration) => {
 		const hours = Math.floor(duration / 60);
 		const minutes = Math.floor(duration % 60);
@@ -55,8 +57,8 @@ function MovieCard({
 
 	return (
 		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{(isShown && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={isHovered ? <MovieRemoveButton /> : <MovieAddButton />} />}
-			{(location.pathname === '/saved-movies') && <Button onClick={toggleDeleteMovie} type="movie-card_saved" label={isHovered && <MovieRemoveButton />} />}
+			{(isShown && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={(isHovered || screenSize.width <= 768) ? <MovieRemoveButton /> : <MovieAddButton />} />}
+			{(location.pathname === '/saved-movies') && <Button onClick={toggleDeleteMovie} type="movie-card_saved" label={(isHovered || screenSize.width <= 768) && <MovieRemoveButton />} />}
 			{(!isShown && isHovered) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
