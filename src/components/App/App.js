@@ -294,18 +294,26 @@ function App() {
 						isNotFound={isNotFound}
 					/>
 					<Route path="/signin">
-						<Login
-							onLogin={handleLogin}
-							isInfoTipShown={isInfoTipShown}
-							formErrorMessage={formErrorMessage}
-						/>
+						{isLoggedIn
+							? <Redirect to="/" />
+							: (
+								<Login
+									onLogin={handleLogin}
+									isInfoTipShown={isInfoTipShown}
+									formErrorMessage={formErrorMessage}
+								/>
+							)}
 					</Route>
 					<Route path="/signup">
-						<Register
-							onRegistration={handleRegistration}
-							isInfoTipShown={isInfoTipShown}
-							formErrorMessage={formErrorMessage}
-						/>
+						{isLoggedIn
+							? <Redirect to="/" />
+							: (
+								<Register
+									onRegistration={handleRegistration}
+									isInfoTipShown={isInfoTipShown}
+									formErrorMessage={formErrorMessage}
+								/>
+							)}
 					</Route>
 					<ProtectedRoute
 						path="/profile"
