@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import MovieAddButton from '../MovieAddButton/MovieAddButton';
 import MovieRemoveButton from '../MovieRemoveButton/MovieRemoveButton';
+import getTrailerLink from '../../utils/getTrailerLink';
 
 function MovieCard({
 	data, saveMovie, isSaved, deleteMovie, deleteMoviefromSearch,
@@ -34,7 +35,7 @@ function MovieCard({
 		duration: data.duration || 0,
 		year: data.year || 'Нет данных',
 		image: `${baseUrl}${data.image.url}`,
-		trailerLink: data.trailerLink,
+		trailerLink: getTrailerLink(data),
 		nameRU: data.nameRU || 'Нет данных',
 		nameEN: data.nameEN || 'Нет данных',
 		movieId: data.id,
