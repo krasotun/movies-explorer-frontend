@@ -34,7 +34,14 @@ function App() {
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
-	const [searchRequest, setSearchRequest] = React.useState('');
+
+	const isRequestSaved = () => {
+		const request = localStorage.getItem('searchRequest');
+		if (request) {
+			return request;
+		} return '';
+	};
+	const [searchRequest, setSearchRequest] = React.useState(isRequestSaved());
 
 	const noHeaderShown = [
 		'/signin',
@@ -239,15 +246,9 @@ function App() {
 				console.log(err);
 			});
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const seachRequest = localStorage.getItem('searchRequest');
 		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
 		if (foundedMovies) {
 			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
-			if (seachRequest) {
-				setSearchRequest(seachRequest);
-			} else if (!seachRequest) {
-				setSearchRequest('');
-			}
 			if (!shortMoviesChecked) {
 				setMoviesArray(foundedMovies);
 			} else if (shortMoviesChecked) {
