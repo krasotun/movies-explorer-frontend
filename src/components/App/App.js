@@ -116,7 +116,6 @@ function App() {
 	const handleMoviesSearch = (search) => {
 		setIsNotFound(false);
 		setIsLoading(true);
-		// setMoviesArray([]);
 		const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
 		if (filtered.length === 0) {
 			setIsNotFound(true);
@@ -144,6 +143,7 @@ function App() {
 				console.log(err);
 			});
 	};
+	console.log(savedMoviesArray);
 	const toggleMenuShown = () => {
 		if (isMenuShown) {
 			setIsMenuShown(false);
