@@ -116,16 +116,28 @@ function App() {
 	const handleMoviesSearch = (search) => {
 		setIsNotFound(false);
 		setIsLoading(true);
-		const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
-		if (filtered.length === 0) {
-			setIsNotFound(true);
+		if (isShortFilmsShown) {
+			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			const shortMovies = filtered.filter((movie) => movie.duration <= 40);
+			if (shortMovies.length === 0) {
+				setIsNotFound(false);
+			}
+			localStorage.setItem('foundedMovies', JSON.stringify(shortMovies));
+			setMoviesArray(shortMovies);
 		}
-		setMoviesArray(filtered);
-		localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+		if (!isShortFilmsShown) {
+			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			if (filtered.length === 0) {
+				setIsNotFound(true);
+			}
+			localStorage.setItem('foundedMovies', JSON.stringify(filtered));
+			setMoviesArray(filtered);
+		}
 		localStorage.setItem('searchRequest', search);
 		setSearchRequest(search);
 		setIsLoading(false);
 	};
+
 	const handleSavedMoviesSearch = (search) => {
 		setIsNotFound(false);
 		const token = localStorage.getItem('jwt');
@@ -143,7 +155,6 @@ function App() {
 				console.log(err);
 			});
 	};
-	console.log(savedMoviesArray);
 	const toggleMenuShown = () => {
 		if (isMenuShown) {
 			setIsMenuShown(false);
