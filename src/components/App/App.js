@@ -55,6 +55,15 @@ function App() {
 		'/404',
 	];
 
+	const getMovies = () => {
+		movies.getMovies()
+			.then((res) => {
+				setCachedMoviesArray(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	const getSavedMovies = () => {
 		const token = localStorage.getItem('jwt');
 		if (token) {
@@ -252,14 +261,8 @@ function App() {
 	}, [isSavedShortFilmsShown]);
 
 	React.useEffect(() => {
+		getMovies();
 		handleTokenCheck();
-		movies.getMovies()
-			.then((res) => {
-				setCachedMoviesArray(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
 	}, [isLoggedIn]);
 	return (
 		<div className="app">
