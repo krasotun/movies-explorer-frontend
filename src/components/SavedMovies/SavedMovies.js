@@ -4,8 +4,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({
 	moviesList, deleteMovie, toggleIsShortFilmsShown,
-	isShortFilmsShown, onSubmit, searchRequest, isNotFound,
+	isShortFilmsShown, onSubmit, searchRequest, isNotFound, getSavedMovies,
 }) {
+	React.useEffect(() => {
+		getSavedMovies();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<>
 			<SearchSection

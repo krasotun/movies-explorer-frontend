@@ -255,7 +255,6 @@ function App() {
 				setMoviesArray(filteredMovies);
 			}
 		} else setMoviesArray([]);
-		getSavedMovies();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 	return (
@@ -278,6 +277,7 @@ function App() {
 						isShortFilmsShown={isSavedShortFilmsShown}
 						onSubmit={handleSavedMoviesSearch}
 						isNotFound={isNotFound}
+						getSavedMovies={getSavedMovies}
 					/>
 					<ProtectedRoute
 						isLoggedIn={isLoggedIn}
