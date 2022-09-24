@@ -34,7 +34,6 @@ function App() {
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
-
 	const isRequestSaved = () => {
 		const request = localStorage.getItem('searchRequest');
 		if (request) {
@@ -100,24 +99,18 @@ function App() {
 			localStorage.setItem('savedShortMoviesChecked', 'true');
 		}
 	};
-	const toggleIsShortFilmsShown = () => {
-		if (isShortFilmsShown) {
-			setIsShortFilmsShown(false);
-			localStorage.removeItem('shortMoviesChecked');
-		} else {
-			setIsShortFilmsShown(true);
-			localStorage.setItem('shortMoviesChecked', 'true');
-		}
-	};
 
 	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
 		.includes(symbols.toLowerCase());
+
+	// eslint-disable-next-line no-unused-vars
 
 	const handleMoviesSearch = (search) => {
 		setIsNotFound(false);
 		setIsLoading(true);
 		if (isShortFilmsShown) {
 			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			localStorage.setItem('extraMovies', JSON.stringify(filtered));
 			const shortMovies = filtered.filter((movie) => movie.duration <= 40);
 			if (shortMovies.length === 0) {
 				setIsNotFound(false);
@@ -138,6 +131,23 @@ function App() {
 		setIsLoading(false);
 	};
 
+	React.useEffect(() => {
+		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		if (foundedMovies) {
+			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+			const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
+			const extraMovies = JSON.parse(localStorage.getItem('extraMovies'));
+			if (extraMovies && !isShortFilmsShown) {
+				setMoviesArray(extraMovies);
+			} else if (isShortFilmsShown) {
+				setMoviesArray(filteredMovies);
+			} else setMoviesArray(foundedMovies);
+			if (shortMoviesChecked) {
+				setIsShortFilmsShown(true);
+			}
+		} else setMoviesArray([]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isShortFilmsShown]);
 	const handleSavedMoviesSearch = (search) => {
 		setIsNotFound(false);
 		const token = localStorage.getItem('jwt');
@@ -155,12 +165,21 @@ function App() {
 				console.log(err);
 			});
 	};
+
+	const toggleIsShortFilmsShown = () => {
+		if (isShortFilmsShown) {
+			setIsShortFilmsShown(false);
+			localStorage.removeItem('shortMoviesChecked');
+		} else {
+			setIsShortFilmsShown(true);
+			localStorage.setItem('shortMoviesChecked', 'true');
+		}
+	};
 	const toggleMenuShown = () => {
 		if (isMenuShown) {
 			setIsMenuShown(false);
 		} else setIsMenuShown(true);
 	};
-
 	const handleEditUserInfo = (name, email) => {
 		userInfo.setUserInfo(name, email)
 			.then((res) => {
@@ -217,21 +236,6 @@ function App() {
 		setMoviesArray([]);
 		history.push('/');
 	};
-	React.useEffect(() => {
-		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		if (foundedMovies) {
-			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
-			const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
-			if (isShortFilmsShown) {
-				setMoviesArray(filteredMovies);
-			} else {
-				setMoviesArray(foundedMovies);
-			}
-			if (shortMoviesChecked) {
-				setIsShortFilmsShown(true);
-			}
-		} else setMoviesArray([]);
-	}, [isShortFilmsShown]);
 
 	React.useEffect(() => {
 		const filteredMovies = savedMoviesArray.filter((movie) => movie.duration <= 40);
@@ -256,17 +260,6 @@ function App() {
 			.catch((err) => {
 				console.log(err);
 			});
-		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
-		if (foundedMovies) {
-			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
-			if (!shortMoviesChecked) {
-				setMoviesArray(foundedMovies);
-			} else if (shortMoviesChecked) {
-				setMoviesArray(filteredMovies);
-			}
-		} else setMoviesArray([]);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 	return (
 		<div className="app">
