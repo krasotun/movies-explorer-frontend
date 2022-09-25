@@ -41,7 +41,7 @@ function App() {
 		} return '';
 	};
 	const [searchRequest, setSearchRequest] = React.useState(isRequestSaved());
-
+	const shortMoviesDuration = 40;
 	const noHeaderShown = [
 		'/signin',
 		'/signup',
@@ -120,7 +120,7 @@ function App() {
 		if (isShortFilmsShown) {
 			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
 			localStorage.setItem('extraMovies', JSON.stringify(filtered));
-			const shortMovies = filtered.filter((movie) => movie.duration <= 40);
+			const shortMovies = filtered.filter((movie) => movie.duration <= shortMoviesDuration);
 			if (shortMovies.length === 0) {
 				setIsNotFound(false);
 			}
@@ -143,7 +143,7 @@ function App() {
 	React.useEffect(() => {
 		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
 		if (foundedMovies) {
-			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= 40);
+			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= shortMoviesDuration);
 			const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
 			const extraMovies = JSON.parse(localStorage.getItem('extraMovies'));
 			if (extraMovies && !isShortFilmsShown) {
@@ -247,7 +247,8 @@ function App() {
 	};
 
 	React.useEffect(() => {
-		const filteredMovies = savedMoviesArray.filter((movie) => movie.duration <= 40);
+		const filteredMovies = savedMoviesArray
+			.filter((movie) => movie.duration <= shortMoviesDuration);
 		const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
 		if (isSavedShortFilmsShown) {
 			setSavedMoviesArray(filteredMovies);

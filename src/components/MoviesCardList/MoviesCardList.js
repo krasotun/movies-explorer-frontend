@@ -17,23 +17,32 @@ function MoviesCardList({
 	const location = useLocation();
 
 	const screenSizeToRender = {
-		large: 1024,
-		medium: 768,
+		large: 1280,
+		medium: 1279,
 		small: 320,
+	};
+	const numberMoviesToRender = {
+		large: 12,
+		medium: 8,
+		small: 5,
+	};
+	const numberMoviesToAdd = {
+		large: 3,
+		medium: 2,
 	};
 
 	const countRenderedMovies = () => {
 		if (screenSize.width >= screenSizeToRender.large) {
-			setMoviesToRender(12);
-			setMoviesToAdd(3);
+			setMoviesToRender(numberMoviesToRender.large);
+			setMoviesToAdd(numberMoviesToAdd.large);
 		} else if (screenSize.width < screenSizeToRender.large
 			&& screenSize.width >= screenSizeToRender.medium) {
-			setMoviesToRender(8);
-			setMoviesToAdd(2);
+			setMoviesToRender(numberMoviesToRender.medium);
+			setMoviesToAdd(numberMoviesToAdd.medium);
 		} else if (screenSize.width < screenSizeToRender.medium
 			&& screenSize.width >= screenSizeToRender.small) {
-			setMoviesToRender(5);
-			setMoviesToAdd(2);
+			setMoviesToRender(numberMoviesToRender.small);
+			setMoviesToAdd(numberMoviesToAdd.medium);
 		}
 	};
 	React.useEffect(() => {
