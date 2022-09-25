@@ -30,7 +30,7 @@ function App() {
 	const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [moviesArray, setMoviesArray] = React.useState([]);
-	const [cachedMoviesArray, setCachedMoviesArray] = React.useState([]);
+	// const [cachedMoviesArray setCachedMoviesArray] = React.useState([]);
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
@@ -54,16 +54,6 @@ function App() {
 		'/profile',
 		'/404',
 	];
-
-	const getMovies = () => {
-		movies.getMovies()
-			.then((res) => {
-				setCachedMoviesArray(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
 	const getSavedMovies = () => {
 		const token = localStorage.getItem('jwt');
 		if (token) {
@@ -113,12 +103,32 @@ function App() {
 		.includes(symbols.toLowerCase());
 
 	// eslint-disable-next-line no-unused-vars
-
+	const getMovies = () => {
+		// eslint-disable-next-line no-shadow
+		const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
+		if (!firstMovies) {
+			setIsLoading(true);
+			movies.getMovies()
+				.then((res) => {
+					localStorage.setItem('firstMovies', JSON.stringify(res));
+				})
+				.catch((err) => {
+					console.log(err);
+				})
+				.finally(() => {
+					setIsLoading(false);
+				});
+		}
+	};
 	const handleMoviesSearch = (search) => {
+		// eslint-disable-next-line no-shadow
+		const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
+		if (!firstMovies) {
+			getMovies();
+		}
 		setIsNotFound(false);
-		setIsLoading(true);
 		if (isShortFilmsShown) {
-			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			const filtered = firstMovies.filter((movie) => filterBySymbols(movie, search));
 			localStorage.setItem('extraMovies', JSON.stringify(filtered));
 			const shortMovies = filtered.filter((movie) => movie.duration <= shortMoviesDuration);
 			if (shortMovies.length === 0) {
@@ -128,7 +138,7 @@ function App() {
 			setMoviesArray(shortMovies);
 		}
 		if (!isShortFilmsShown) {
-			const filtered = cachedMoviesArray.filter((movie) => filterBySymbols(movie, search));
+			const filtered = firstMovies.filter((movie) => filterBySymbols(movie, search));
 			if (filtered.length === 0) {
 				setIsNotFound(true);
 			}
@@ -137,7 +147,6 @@ function App() {
 		}
 		localStorage.setItem('searchRequest', search);
 		setSearchRequest(search);
-		setIsLoading(false);
 	};
 
 	React.useEffect(() => {
@@ -241,7 +250,7 @@ function App() {
 		localStorage.clear();
 		setCurrentUser({});
 		setSearchRequest('');
-		setCachedMoviesArray([]);
+		// setCachedMoviesArray([]);
 		setMoviesArray([]);
 		history.push('/');
 	};
@@ -265,6 +274,7 @@ function App() {
 		getMovies();
 		getSavedMovies();
 		handleTokenCheck();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 	return (
 		<div className="app">
