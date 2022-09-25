@@ -71,14 +71,6 @@ function MoviesCardList({
 			setMoreButtonShown(false);
 		}
 	};
-
-	const getMoviesIds = (array, id) => {
-		const arr = [];
-		array.forEach((item) => {
-			arr.push(item.movieId);
-		});
-		return arr.indexOf(id) >= 0;
-	};
 	// eslint-disable-next-line consistent-return
 	const getIdByMovieId = (array, id) => {
 		if (array) {
@@ -110,7 +102,6 @@ function MoviesCardList({
 								data={item}
 								key={item.id || item._id}
 								savedMoviesList={savedMoviesList}
-								isSaved={location.pathname === '/movies' ? getMoviesIds(savedMoviesList, item.id) : true}
 							/>
 						))}
 					</div>
