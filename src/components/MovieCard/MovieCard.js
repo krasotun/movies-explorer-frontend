@@ -7,11 +7,12 @@ import getTrailerLink from '../../utils/getTrailerLink';
 import useScreenSize from '../../utils/ScreenSize';
 
 function MovieCard({
-	data, saveMovie, isSaved, deleteMovie, deleteMoviefromSearch,
+	data, saveMovie, isSaved, deleteMovie, deleteMoviefromSearch, savedMoviesList,
 }) {
+	const location = useLocation();
+	const isOwnLike = location.pathname === '/movies' ? savedMoviesList.some((item) => item.movieId === data.id) : true;
 	const [isHovered, setIsHovered] = useState(false);
 	const [isShown, setIsShown] = useState(isSaved);
-	const location = useLocation();
 	const toggleIsShown = () => {
 		if (isShown) {
 			setIsShown(false);
@@ -57,9 +58,9 @@ function MovieCard({
 
 	return (
 		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
-			{(isShown && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={<MovieAddButton />} />}
+			{(isOwnLike && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={<MovieAddButton />} />}
 			{(location.pathname === '/saved-movies') && <Button onClick={toggleDeleteMovie} type="movie-card_saved" label={(isHovered || screenSize.width <= 768) && <MovieRemoveButton />} />}
-			{(!isShown && (isHovered || screenSize.width <= 768)) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
+			{(!isOwnLike && (isHovered || screenSize.width <= 768)) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
 			</a>
