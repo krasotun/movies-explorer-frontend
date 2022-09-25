@@ -263,6 +263,7 @@ function App() {
 
 	React.useEffect(() => {
 		getMovies();
+		getSavedMovies();
 		handleTokenCheck();
 	}, [isLoggedIn]);
 	return (
