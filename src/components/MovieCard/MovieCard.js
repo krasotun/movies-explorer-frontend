@@ -59,7 +59,7 @@ function MovieCard({
 		<article className="movie-card" onMouseOver={setHover} onMouseLeave={removeHover} onFocus={setHover}>
 			{(isShown && location.pathname === '/movies') && <Button onClick={toggleDeleteMoviefromSearch} type="movie-card_saved" label={<MovieAddButton />} />}
 			{(location.pathname === '/saved-movies') && <Button onClick={toggleDeleteMovie} type="movie-card_saved" label={(isHovered || screenSize.width <= 768) && <MovieRemoveButton />} />}
-			{(!isShown && (isHovered || screenSize.width <= 320)) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
+			{(!isShown && (isHovered || screenSize.width <= 768)) && <Button onClick={toggleSaveMovie} type="movie-card_save" label="Сохранить" />}
 			<a className="movie-card__link" href={data.trailerLink} target="_blanc">
 				<img className="movie-card__image" src={location.pathname === '/saved-movies' ? data.image : movieData.image} alt={data.nameRU} />
 			</a>
