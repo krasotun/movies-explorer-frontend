@@ -145,24 +145,6 @@ function App() {
 		localStorage.setItem('searchRequest', search);
 		setSearchRequest(search);
 	};
-
-	React.useEffect(() => {
-		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
-		if (foundedMovies) {
-			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= shortMoviesDuration);
-			const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
-			const extraMovies = JSON.parse(localStorage.getItem('extraMovies'));
-			if (extraMovies && !isShortFilmsShown) {
-				setMoviesArray(extraMovies);
-			} else if (isShortFilmsShown) {
-				setMoviesArray(filteredMovies);
-			} else setMoviesArray(foundedMovies);
-			if (shortMoviesChecked) {
-				setIsShortFilmsShown(true);
-			}
-		} else setMoviesArray([]);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isShortFilmsShown]);
 	const handleSavedMoviesSearch = (search) => {
 		setIsNotFound(false);
 		const token = localStorage.getItem('jwt');
@@ -170,7 +152,14 @@ function App() {
 		mainApi.getMovies(token)
 			.then((res) => {
 				const filtered = res.filter((movie) => filterBySymbols(movie, search));
-				setSavedMoviesArray(filtered);
+				if (isSavedShortFilmsShown) {
+					localStorage.setItem('extraSavedMovies', JSON.stringify(filtered));
+					const shortFiltered = filtered.filter((movie) => movie.duration <= shortMoviesDuration);
+					if (shortFiltered.length === 0) {
+						setIsNotFound(true);
+					}
+					setSavedMoviesArray(shortFiltered);
+				} else setSavedMoviesArray(filtered);
 				if (filtered.length === 0) {
 					setIsNotFound(true);
 				}
@@ -250,12 +239,31 @@ function App() {
 		setMoviesArray([]);
 		history.push('/');
 	};
-
+	React.useEffect(() => {
+		const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
+		if (foundedMovies) {
+			const filteredMovies = foundedMovies.filter((movie) => movie.duration <= shortMoviesDuration);
+			const shortMoviesChecked = JSON.parse(localStorage.getItem('shortMoviesChecked'));
+			const extraMovies = JSON.parse(localStorage.getItem('extraMovies'));
+			if (extraMovies && !isShortFilmsShown) {
+				setMoviesArray(extraMovies);
+			} else if (isShortFilmsShown) {
+				setMoviesArray(filteredMovies);
+			} else setMoviesArray(foundedMovies);
+			if (shortMoviesChecked) {
+				setIsShortFilmsShown(true);
+			}
+		} else setMoviesArray([]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isShortFilmsShown]);
 	React.useEffect(() => {
 		const filteredMovies = savedMoviesArray
 			.filter((movie) => movie.duration <= shortMoviesDuration);
 		const savedShortMoviesChecked = JSON.parse(localStorage.getItem('savedShortMoviesChecked'));
-		if (isSavedShortFilmsShown) {
+		const extraSavedMovies = JSON.parse(localStorage.getItem('extraSavedMovies'));
+		if (extraSavedMovies && !isSavedShortFilmsShown) {
+			setSavedMoviesArray(extraSavedMovies);
+		} else if (isSavedShortFilmsShown) {
 			setSavedMoviesArray(filteredMovies);
 		} else {
 			setSavedMoviesArray(savedMoviesArray);
