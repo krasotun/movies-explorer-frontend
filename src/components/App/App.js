@@ -105,24 +105,6 @@ function App() {
 
 	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
 		.includes(symbols.toLowerCase());
-	// const getMovies = () => {
-	// 	// eslint-disable-next-line no-shadow
-	// 	const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
-	// 	if (!firstMovies) {
-	// 		setIsLoading(true);
-	// 		movies.getMovies()
-	// 			.then((res) => {
-	// 				localStorage.setItem('firstMovies', JSON.stringify(res));
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err);
-	// 			})
-	// 			.finally(() => {
-	// 				setIsLoading(false);
-	// 			});
-	// 	}
-	// };
-
 	const handleMoviesSearch = async (search) => {
 		// eslint-disable-next-line no-shadow
 		if (!firstMovies) {
