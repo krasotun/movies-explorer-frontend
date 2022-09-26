@@ -11,14 +11,14 @@ function Register({ isInfoTipShown, onRegistration, formErrorMessage }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid },
+		formState: { errors, isValid, isSubmitting },
 	} = useForm({ mode: 'onChange' });
 
 	React.useEffect(() => {
-		if (!isValid) {
+		if (!isValid || isSubmitting) {
 			setisButtonDisable(true);
 		} else setisButtonDisable(false);
-	}, [isValid]);
+	}, [isValid, isSubmitting]);
 	function handleNameChange(event) {
 		setName(event.target.value);
 	}

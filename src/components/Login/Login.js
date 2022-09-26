@@ -10,13 +10,13 @@ function Login({ isInfoTipShown, onLogin, formErrorMessage }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid },
+		formState: { errors, isValid, isSubmitting },
 	} = useForm({ mode: 'onChange' });
 	React.useEffect(() => {
-		if (!isValid) {
+		if (!isValid || isSubmitting) {
 			setisButtonDisable(true);
 		} else setisButtonDisable(false);
-	}, [isValid]);
+	}, [isValid, isSubmitting]);
 	function handleEmailChange(event) {
 		setEmail(event.target.value);
 	}
