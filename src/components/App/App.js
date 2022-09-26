@@ -33,6 +33,7 @@ function App() {
 	const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
 	const [isShortFilmsShown, setIsShortFilmsShown] = React.useState(false);
 	const [isSavedShortFilmsShown, setIsSavedShortFilmsShown] = React.useState(false);
+	let firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
 	const isRequestSaved = () => {
 		const request = localStorage.getItem('searchRequest');
 		if (request) {
@@ -104,14 +105,32 @@ function App() {
 
 	const filterBySymbols = (movie, symbols) => movie.nameRU.toLowerCase()
 		.includes(symbols.toLowerCase());
-	const getMovies = () => {
+	// const getMovies = () => {
+	// 	// eslint-disable-next-line no-shadow
+	// 	const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
+	// 	if (!firstMovies) {
+	// 		setIsLoading(true);
+	// 		movies.getMovies()
+	// 			.then((res) => {
+	// 				localStorage.setItem('firstMovies', JSON.stringify(res));
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err);
+	// 			})
+	// 			.finally(() => {
+	// 				setIsLoading(false);
+	// 			});
+	// 	}
+	// };
+
+	const handleMoviesSearch = async (search) => {
 		// eslint-disable-next-line no-shadow
-		const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
 		if (!firstMovies) {
 			setIsLoading(true);
-			movies.getMovies()
+			await movies.getMovies()
 				.then((res) => {
 					localStorage.setItem('firstMovies', JSON.stringify(res));
+					firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
 				})
 				.catch((err) => {
 					console.log(err);
@@ -119,13 +138,6 @@ function App() {
 				.finally(() => {
 					setIsLoading(false);
 				});
-		}
-	};
-	const handleMoviesSearch = (search) => {
-		// eslint-disable-next-line no-shadow
-		const firstMovies = JSON.parse(localStorage.getItem('firstMovies'));
-		if (!firstMovies) {
-			getMovies();
 		}
 		setIsNotFound(false);
 		if (isShortFilmsShown) {
@@ -277,9 +289,7 @@ function App() {
 		} else getSavedMovies();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isSavedShortFilmsShown]);
-
 	React.useEffect(() => {
-		getMovies();
 		getSavedMovies();
 		handleTokenCheck();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
