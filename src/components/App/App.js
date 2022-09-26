@@ -61,7 +61,7 @@ function App() {
 					setSavedMoviesArray(res);
 				})
 				.catch((err) => {
-					console.log('ошибка при загрузке своих фильмов', err);
+					console.log('Ошибка при загрузке своих фильмов', err);
 				});
 		}
 	};
@@ -69,22 +69,26 @@ function App() {
 	const saveMovie = (data) => {
 		const token = localStorage.getItem('jwt');
 		mainApi.saveMovie(data, token)
-			.then(() => {
-				getSavedMovies();
+			.then((savedMovie) => {
+				const updatedSavedMovies = [...savedMoviesArray, savedMovie];
+				setSavedMoviesArray(updatedSavedMovies);
 			})
 			.catch((err) => {
-				console.log('Ошибка сохранения фильма', err);
+				console.log('Ошибка при сохранении фильма', err);
 			});
 	};
 
 	const deleteMovie = (id) => {
 		const token = localStorage.getItem('jwt');
 		mainApi.deleteMovie(id, token)
-			.then(() => {
-				getSavedMovies();
+			.then((deletedMovie) => {
+				const updatedSavedMovies = savedMoviesArray.filter(
+					(movie) => movie._id !== deletedMovie._id,
+				);
+				setSavedMoviesArray(updatedSavedMovies);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log('Ошибка при удалении фильма', err);
 			});
 	};
 
