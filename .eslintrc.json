@@ -25,6 +25,9 @@
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],
     "linebreak-style": 0,
-    "jsx-quotes": "warn"
+    "jsx-quotes": "warn",
+    "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

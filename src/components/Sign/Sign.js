@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import InfoTip from '../InfoTip/InfoTip';
 
 function Sign({
-	title, children, buttonText, questionTitle, bottomLink, bottomLinkText, formType,
+	title, children, buttonText, questionTitle, bottomLink,
+	bottomLinkText, formType, onSubmit, isInfoTipShown, buttonDisabled, formErrorMessage, signOut,
 }) {
 	return (
-		<form className={`form ${formType}-form`}>
+		<form className={`form ${formType}-form`} onSubmit={onSubmit}>
 			<div className={`${formType}-form__container`}>
 				<div className={`form ${formType}-form__title-container`}>
 					{(formType === 'sign') && <Logo />}
@@ -16,7 +18,13 @@ function Sign({
 				{children}
 			</div>
 			<div className={`${formType}-form__container_bottom`}>
+				<InfoTip
+					isInfoTipShown={isInfoTipShown}
+					messageText={formErrorMessage}
+				/>
 				<Button
+					buttonDisabled={buttonDisabled}
+					formSubmitButton
 					label={buttonText}
 					type={`${formType}-form-submit`}
 				/>
@@ -30,7 +38,7 @@ function Sign({
 
 				{formType === 'profile'
 					&& (
-						<Link to={bottomLink} className="profile__link">{bottomLinkText}</Link>
+						<Link onClick={signOut} to={bottomLink} className="profile__link">{bottomLinkText}</Link>
 					)}
 			</div>
 		</form>

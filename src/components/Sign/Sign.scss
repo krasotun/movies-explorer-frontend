@@ -4,7 +4,6 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-
   &-form {
     padding: 70px 0;
     width: 396px;
@@ -45,13 +44,15 @@
     }
     &__error {
       margin-top: 6px;
-      height: 12px;
+      min-height: 12px;
+      display: block;
       &-text {
         font-style: normal;
         font-weight: 400;
         font-size: 10px;
         line-height: 12px;
         color: #ee3465;
+        margin: 0;
         &_hidden {
           display: none;
         }
@@ -67,6 +68,9 @@
       border: transparent;
       padding: 0;
       border-bottom: 1px #e8e8e8 solid;
+      &_error {
+        border-bottom: 1px red solid;
+      }
       &:focus {
         outline: transparent;
         border-bottom: 1px #ff6838 solid;

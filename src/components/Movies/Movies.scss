@@ -19,11 +19,9 @@
   &__cards-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 30px;
     margin-top: 70px;
-    @media screen and (max-width: 1220px) {
-      flex-wrap: wrap;
-    }
     @include media-tablet {
       margin-top: 40px;
     }
@@ -34,6 +32,10 @@
     @include media-mobile {
       margin-top: 40px;
     }
+  }
+  &__error-container {
+    text-align: center;
+    color: red;
   }
   &__button-container {
     padding-top: 50px;
